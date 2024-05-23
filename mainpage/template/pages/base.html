@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>uniApp</title>
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <header>
+        <nav class="navbar">
+          <div class="left-side">
+            <a href="#" class="nav-logo">uni<span>App</span></a>
+          </div>
+          <div class="hamburger" id="hamburger">
+            <i class="fa fa-bars" id="bars-icon"></i>
+          </div>
+          <div class="right-side" id="right-side">
+            <ul class="nav-links">
+              <li><a class="nav-special" href="#">Applicants</a></li>
+              <li><a class="nav-special" href="#">Resources</a></li>
+              <li><a class="nav-special" href="#">About</a></li>
+              <li class="special"><a href="#">Profile</a></li>
+              <li class="special"><a href="#">Login</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="hero">
+          <h1>Unlock Your Future</h1>
+          <p>
+            Explore and connect with the uni that aligns with your future
+            aspirations
+          </p>
+          <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for a uni" />
+            <div class="dropdown">
+              <button class="dropbtn" id="dropbtn">Public</button>
+              <div class="dropdown-content">
+                <a href="#" selected disabled>Public</a>
+                <a href="#">Private</a>
+                <a href="#">Online</a>
+              </div>
+            </div>
+
+            <i class="fa-solid fa-chevron-down"></i>
+            <button class="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        {% block content %}
+
+        {% endblock %}
+      </main>
+
+      <footer class="footer__section">
+        <button id="scrollToTop" onclick="scrollToTop()" title="Go to top">
+            <i class="fa fa-arrow-up"></i>
+          </button>
+        <div class="footer-container">
+          <div class="footer-section">
+            <div class="logo-sec">
+              <a href="#" class="footer-logo">uni<span>App</span></a>
+              <p>Start your tertiary education journey with ease.</p>
+            </div>
+            <div class="social-icons">
+              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+          </div>
+          <div class="footer-section section">
+            <h3>Features</h3>
+            <ul>
+              <li><a class="unlink" href="#">Advanced Search Filters</a></li>
+              <li>
+                <a class="unlink" href="#">Geo-Based Recommendations</a>
+              </li>
+              <li><a class="unlink" href="#">User Account Management</a></li>
+              <li>
+                <a class="unlink" href="#">Interactive User Interface</a>
+              </li>
+              <li><a class="unlink" href="#">Blog Posts</a></li>
+              <li><a class="unlink" href="#">Media News</a></li>
+              <li><a class="unlink" href="#">FAQs & Support</a></li>
+              <li><a class="unlink" href="#">Multilingual Support</a></li>
+              <li><a class="unlink" href="#">Data Security</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <div class="company">
+              <h3>Company</h3>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Mail Us</a></li>
+              </ul>
+            </div>
+
+            <div class="contact-us">
+              <h3>Contact Us</h3>
+              <ul>
+                <li><a class="unlink" href="#">uniapp@gmail.com</a></li>
+                <li><a class="unlink" href="#">0233 555 660 7309</a></li>
+                <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
+                <li><a class="unlink" href="#">Accra, Ghana</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <div class="more-info">
+              <h3>More Info</h3>
+              <ul>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Platform Updates</a></li>
+                <li><a href="#">Community Engagement</a></li>
+              </ul>
+            </div>
+
+            <div class="help">
+              <h3>Help & Support</h3>
+              <ul>
+                <li><a href="#">Getting Started FAQs</a></li>
+                <li><a href="#">User Guide</a></li>
+                <li><a href="#">Technical Support</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
+          <p>All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

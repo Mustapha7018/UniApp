@@ -1,0 +1,197 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% block content %}
+<section class="toggle__section">
+  <div class="container">
+    <div class="tab-wrap">
+      <input type="radio" id="tab4" name="tabGroup2" class="tab" checked />
+      <label for="tab4">APPLY</label>
+      <input type="radio" id="tab5" name="tabGroup2" class="tab" />
+      <label for="tab5">COMMUNITY</label>
+      <input type="radio" id="tab6" name="tabGroup2" class="tab" />
+      <label for="tab6">KEY DATES</label>
+      <input type="radio" id="tab7" name="tabGroup2" class="tab" />
+      <label for="tab7">MEDIA</label>
+      <input type="radio" id="tab8" name="tabGroup2" class="tab" />
+      <label for="tab8">USEFUL LINKS</label>
+
+      <div class="tab__content">
+        <div class="toggle-containers">
+          <div class="toggle-grid">
+            <a href="https://www.google.com">
+              <div class="grid">
+                <i class="fa-solid fa-book"></i>
+                <p>UNDERGRADUATE STUDIES</p>
+              </div>
+            </a>
+            <a href="">
+              <div class="grid">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <p>GRADUATE STUDIES</p>
+              </div>
+            </a>
+            <a href="">
+              <div class="grid">
+                <i class="fa-solid fa-user-tie"></i>
+                <p>PROFESSIONAL PROGRAMS</p>
+              </div>
+            </a>
+            <a href="">
+              <div class="grid">
+                <i class="fa-solid fa-clock"></i>
+                <p>PART-TIME PROGRAM</p>
+              </div>
+            </a>
+            <a href="">
+              <div class="grid">
+                <i class="fa-solid fa-globe"></i>
+                <p>DISTANCE LEARNING</p>
+              </div>
+            </a>
+            <a href="">
+              <div class="grid">
+                <i class="fa-solid fa-plane"></i>
+                <p>INTERNATIONAL APPLICANT</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab__content">
+        <h3>Oranges</h3>
+        <p>
+          Praesent nonummy mi in odio. Nullam accumsan lorem in dui. Vestibulum
+          turpis sem, aliquet eget, lobortis pellentesque, rutrum eu, nisl.
+          Nullam accumsan lorem in dui. Donec pede justo, fringilla vel, aliquet
+          nec, vulputate eget, arcu.
+        </p>
+        <p>
+          In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Morbi
+          mattis ullamcorper velit. Pellentesque posuere. Etiam ut purus mattis
+          mauris sodales aliquam. Praesent nec nisl a purus blandit viverra.
+        </p>
+      </div>
+
+      <div class="tab__content">
+        <h3>Bananas</h3>
+        <p>
+          Praesent nonummy mi in odio. Nullam accumsan lorem in dui. Vestibulum
+          turpis sem, aliquet eget, lobortis pellentesque, rutrum eu, nisl.
+          Nullam accumsan lorem in dui. Donec pede justo, fringilla vel, aliquet
+          nec, vulputate eget, arcu.
+        </p>
+      </div>
+
+      <div class="tab__content">
+        <h3>Kiwis</h3>
+        <p>Praesent nonummy mi in odio.</p>
+      </div>
+
+      <div class="tab__content">
+        <h3>Tomatos</h3>
+        <p>
+          Praesent nonummy mi in odio. Nullam accumsan lorem in dui. Vestibulum
+          turpis sem, aliquet eget, lobortis pellentesque, rutrum.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey__section">
+  <div class="row">
+    <div class="image-wrapper">
+      <img src="{% static 'images/left-img.png' %}" alt="" />
+    </div>
+    <div class="content-wrapper">
+      <div class="content">
+        <span class="text-wrapper"> <span></span>Refined approach </span>
+        <h2>Your Personalized Journey to Tertiary</h2>
+        <p>
+          Embark on your educational adventure here. Let us guide you through
+          each step as you forge your path to academic success.
+        </p>
+        <div class="buttons">
+          <button class="undergrad-btn">Undergraduate Applicant</button>
+          <button class="graduate-btn">Graduate Applicant</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blog__section">
+  <span class="text-wrapper"><span></span>Blog</span>
+  <div class="blog-container">
+    <div class="blog-card">
+      <img
+        src="{% static 'images/blog-img1.png' %}"
+        alt="Graduation Celebration"
+      />
+      <div class="blog-content">
+        <a href="">
+          <p>
+            Graduation Time. What's next? How graduates are advised to prepare
+            for the real world...
+          </p>
+        </a>
+        <span>Nov 20, 2023</span>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img
+        src="{% static 'images/blog-img2.png' %}"
+        alt="Friends Celebrating Graduation"
+      />
+      <div class="blog-content">
+        <a href="">
+          <p>
+            Graduation Time. What's next? How graduates are advised to prepare
+            for the real world...
+          </p>
+        </a>
+        <span>Oct 13, 2023</span>
+      </div>
+    </div>
+    <div class="blog-card">
+      <img src="{% static 'images/blog-img3.png' %}" alt="Graduate Smiling" />
+      <div class="blog-content">
+        <a href="">
+          <p>
+            Graduation Time. What's next? How graduates are advised to prepare
+            for the real world...
+          </p>
+        </a>
+        <span>Sep 09, 2023</span>
+      </div>
+    </div>
+  </div>
+  <button>Read More</button>
+</section>
+
+<section class="social__proof__section">
+  <div class="proof-container">
+    <div class="proof-heading">
+      <h4>Explore Vast Course Offerings and Diverse Universities</h4>
+    </div>
+    <div class="stats">
+      <div class="stat-1">
+        <h2 class="counter" data-target="300">0</h2>
+        <span>+</span>
+        <p>Undergraduate Courses</p>
+      </div>
+      <div class="stat-2">
+        <h2 class="counter" data-target="1000">0</h2>
+        <span>+</span>
+        <p>Graduate Courses</p>
+      </div>
+      <div class="stat-3">
+        <h2 class="counter" data-target="500">0</h2>
+        <span>+</span>
+        <p>Universities</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
