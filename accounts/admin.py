@@ -1,9 +1,11 @@
-from .models import CustomUser
 from django.contrib import admin
+from .models import CustomUser, CodeEmail
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
+
+admin.site.register(CodeEmail)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):

@@ -46,7 +46,7 @@ class CustomUser(AbstractUser):
 class CodeEmail(models.Model):
     fullname = models.CharField(max_length=255, blank=False, null=False)
     email = models.EmailField(max_length=255, blank=False, null=False)
-    password = models.CharField(blank=False, null=False)
+    password = models.CharField(blank=False, null=False, max_length=20)
     code = models.IntegerField(blank=False, null=False)
 
     def __str__(self):

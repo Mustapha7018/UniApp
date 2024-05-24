@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  </head>
+  <body>
+    <div class="logo">
+      <p>uni<span>App</span></p>
+    </div>
+
+    <div class="wrapper">
+      <form action="">
+        <h2>LOGIN</h2>
+
+        <div class="input-group">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+          />
+          <label for="email">Email</label>
+          <i class="fa-sharp fa-solid fa-envelope"></i>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password1" name="password1" required />
+          <label for="password1">Password</label>
+          <i class="fa-solid fa-eye-slash"></i>
+        </div>
+        <button type="submit" class="login-btn"><span>LOGIN</span></button>
+        <p>Forgot password? <a href="#" class="reset-link">Reset here</a></p>
+      </form>
+
+      <div class="account">
+        <div class="paraphs">
+          <p>
+            Don't have an account?
+            <a href="{%url 'register' %}" class="register-link">Register</a>
+          </p>
+          <p class="reg">Or sign up with:</p>
+        </div>
+        <div class="auth-icons">
+          <i class="fa-brands fa-google"></i>
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-x-twitter"></i>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

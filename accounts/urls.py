@@ -1,7 +1,10 @@
-# from django.urls import path
-# from .import views
+from django.urls import path
+from .views import CodeVerificationView, RegisterView, loginView
 
 
-# urlpatterns = [
-#     path('home/', views.home, name='home'),
-# ]
+
+urlpatterns = [
+    path('verify/', CodeVerificationView.as_view(), name='verify'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', loginView, name='login'),
+]
