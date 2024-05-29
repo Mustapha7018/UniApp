@@ -128,4 +128,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   
-  
+  // Function to remove messages after 5 seconds
+  setTimeout(function () {
+    var alertMessages = document.querySelectorAll(".alert");
+    alertMessages.forEach(function (alert) {
+      alert.remove();
+    });
+  }, 5000);

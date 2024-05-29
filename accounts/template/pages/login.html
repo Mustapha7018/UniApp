@@ -20,11 +20,24 @@
   </head>
   <body>
     <div class="logo">
-      <p>uni<span>App</span></p>
+      <a href="/"
+        ><p>uni<span>App</span></p></a
+      >
     </div>
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      <p>{{ message }}</p>
+      <span
+        class="alert-close"
+        onclick="this.parentElement.style.display='none';"
+        >&times;</span
+      >
+    </div>
+    {% endfor %}
 
     <div class="wrapper">
-      <form action="">
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
         <h2>LOGIN</h2>
 
         <div class="input-group">
@@ -33,14 +46,21 @@
             id="email"
             name="email"
             required
+            placeholder=" "
             autocomplete="email"
           />
           <label for="email">Email</label>
           <i class="fa-sharp fa-solid fa-envelope"></i>
         </div>
         <div class="input-group">
-          <input type="password" id="password1" name="password1" required />
-          <label for="password1">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder=" "
+          />
+          <label for="password">Password</label>
           <i class="fa-solid fa-eye-slash"></i>
         </div>
         <button type="submit" class="login-btn"><span>LOGIN</span></button>
@@ -51,7 +71,7 @@
         <div class="paraphs">
           <p>
             Don't have an account?
-            <a href="{%url 'register' %}" class="register-link">Register</a>
+            <a href="{% url 'register' %}" class="register-link">Register</a>
           </p>
           <p class="reg">Or sign up with:</p>
         </div>
@@ -62,5 +82,15 @@
         </div>
       </div>
     </div>
+
+    <script>
+      // Function to remove messages after 5 seconds
+      setTimeout(function () {
+        var alertMessages = document.querySelectorAll(".alert");
+        alertMessages.forEach(function (alert) {
+          alert.remove();
+        });
+      }, 5000);
+    </script>
   </body>
 </html>

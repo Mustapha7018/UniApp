@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/verify_code.css' %}" />
+  </head>
+  <body>
+    <section>
+      <div class="logo">
+        <a href="/"
+          ><p>uni<span>App</span></p></a
+        >
+      </div>
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        <p>{{ message }}</p>
+        <span
+          class="alert-close"
+          onclick="this.parentElement.style.display='none';"
+          >&times;</span
+        >
+      </div>
+      {% endfor %}
+      <div class="wrapper">
+        <div class="form-wrapper reset">
+          <form action="{% url 'verify' %}" method="post">
+            {% csrf_token %}
+            <h2>Enter Verification Code</h2>
+
+            <div class="input-group">
+              <input type="text" id="verify_code" name="code" required />
+              <label for="email">Verification Code</label>
+            </div>
+
+            <button type="submit" class="send-mail-btn">
+              <span>Verify Code</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="image-box">
+        <img
+          src="{% static 'images/reset-img.png' %}"
+          alt="young-man-smiling"
+        />
+      </div>
+    </section>
+    <script>
+      // Function to remove messages after 5 seconds
+      setTimeout(function () {
+        var alertMessages = document.querySelectorAll(".alert");
+        alertMessages.forEach(function (alert) {
+          alert.remove();
+        });
+      }, 5000);
+    </script>
+  </body>
+</html>

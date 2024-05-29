@@ -1,51 +1,103 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-</head>
-<body>
-<section>
-    <div class="logo">
-        <p>uni<span>App</span></p>
-    </div>
-    <div class="wrapper">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+  </head>
+  <body>
+    <section>
+      <div class="logo">
+        <a href="/"><p>uni<span>App</span></p></a>
+      </div>
+      <div class="wrapper">
         <div class="form-wrapper sign-up">
-            <form action="{% url 'home' %}" method="post">
-                {% csrf_token %}
-                <h2>SIGN UP</h2>
-                <p>Let's get you started for free!</p>
-                <div class="input-group">
-                    <input type="text" id="fullname" name="fullname" required autocomplete="name">
-                    <label for="fullname">Full Name</label>
-                </div>
-                <div class="input-group">
-                    <input type="email" id="email" name="email" required autocomplete="email">
-                    <label for="email">Email</label>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password1" name="password1" required autocomplete="new-password">
-                    <label for="password1">Password</label>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password2" name="password2" required autocomplete="new-password">
-                    <label for="password2">Confirm Password</label>
-                </div>
-                <button type="submit" class="signup-btn"><span>SIGN UP</span></button>              
-                <p>Already have an account? <a href="{% url 'login' %}" class="login-link">Login</a></p>
-            </form>
+          <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <h2>SIGN UP</h2>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              <p style="color: white;">{{ message }}</p>
+              <span
+                class="alert-close"
+                onclick="this.parentElement.style.display='none';"
+                >&times;</span
+              >
+            </div>
+            {% endfor %}
+            <div class="input-group">
+              <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                required
+                autocomplete="name"
+              />
+              <label for="fullname">Full Name</label>
+            </div>
+            <div class="input-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                autocomplete="email"
+              />
+              <label for="email">Email</label>
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                id="password1"
+                name="password1"
+                required
+                autocomplete="new-password"
+              />
+              <label for="password1">Password</label>
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                id="password2"
+                name="password2"
+                required
+                autocomplete="new-password"
+              />
+              <label for="password2">Confirm Password</label>
+            </div>
+            <button type="submit" class="signup-btn">
+              <span>SIGN UP</span>
+            </button>
+            <p>
+              Already have an account?
+              <a href="{% url 'login' %}" class="login-link">Login</a>
+            </p>
+          </form>
         </div>
-    </div>
-    <div class="image-box">
-        <img src="{% static 'images/signup-img.png' %}" alt="young-lady-smiling">
-    </div>
-</section>
-<script src=""></script>
-</body>
+      </div>
+      <div class="image-box">
+        <img
+          src="{% static 'images/signup-img.png' %}"
+          alt="young-lady-smiling"
+        />
+      </div>
+    </section>
+    <script>
+      // Function to remove messages after 5 seconds
+      setTimeout(function () {
+        var alertMessages = document.querySelectorAll(".alert");
+        alertMessages.forEach(function (alert) {
+          alert.remove();
+        });
+      }, 5000);
+    </script>
+  </body>
 </html>

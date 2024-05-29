@@ -4,13 +4,13 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
-
-admin.site.register(CodeEmail)
+@admin.register(CodeEmail)
+class CodeEmailAdmin(admin.ModelAdmin):
+    list_display = ('email', 'fullname', 'code', 'created_at')
+    search_fields = ('email', 'fullname')
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    """Custom Admin interface for CustomUser model"""
-    
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
@@ -32,7 +32,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('fullname', 'email', 'academic_background', 'location', 'is_active', 'is_staff', 'is_superuser')
     list_display_links = ('email',)
     search_fields = ('fullname', 'email', 'academic_background', 'location')
-    ordering = ('fullname',)        
+    ordering = ('fullname',)
 
 
 admin.site.site_header = _('UniApp Administration')

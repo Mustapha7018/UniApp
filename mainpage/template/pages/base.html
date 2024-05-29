@@ -15,6 +15,16 @@
   <body>
     <div class="main-container">
       <header>
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          <p>{{ message }}</p>
+          <span
+            class="alert-close"
+            onclick="this.parentElement.style.display='none';"
+            >&times;</span
+          >
+        </div>
+        {% endfor %} {% endif %}
         <nav class="navbar">
           <div class="left-side">
             <a href="#" class="nav-logo">uni<span>App</span></a>
@@ -57,16 +67,12 @@
         </div>
       </header>
 
-      <main>
-        {% block content %}
-
-        {% endblock %}
-      </main>
+      <main>{% block content %} {% endblock %}</main>
 
       <footer class="footer__section">
         <button id="scrollToTop" onclick="scrollToTop()" title="Go to top">
-            <i class="fa fa-arrow-up"></i>
-          </button>
+          <i class="fa fa-arrow-up"></i>
+        </button>
         <div class="footer-container">
           <div class="footer-section">
             <div class="logo-sec">

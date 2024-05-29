@@ -139,6 +139,49 @@ nav a.nav-special:hover {
   transform: translateY(-5px);
 }
 
+header {
+  position: relative;
+}
+
+header .alert {
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+}
+
+
+header .alert-success {
+  background-color: #00A28E;
+  color: white;
+}
+
+header .alert-error {
+  background-color: #FF5656;
+  color: white;
+}
+
+header .alert p {
+  margin: 0;
+  flex-grow: 1;
+}
+
+header .alert .alert-close {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+
 /* HAMBURGER MENU */
 .hamburger {
   display: none;
