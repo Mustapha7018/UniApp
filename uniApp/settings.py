@@ -1,18 +1,17 @@
 import os
 from decouple import config
-from .mail_config import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = config('SECRET_KEY', default='f3-o6i#=27k*5^b6uotf5idbwbg#is)q*o8fd2nuza*5kxex8^')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-EMAIL_BACKEND = EMAIL_BACKEND
-EMAIL_HOST = EMAIL_HOST
-EMAIL_PORT = EMAIL_PORT
-EMAIL_USE_TLS = EMAIL_USE_TLS
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 ALLOWED_HOSTS = []
 
@@ -66,7 +65,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'uniApp.wsgi.application'
 
 DATABASES = {
@@ -101,15 +99,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mainpage', 'static'),
     os.path.join(BASE_DIR, 'accounts', 'static'),
 ]
-
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
