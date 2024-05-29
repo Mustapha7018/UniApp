@@ -24,7 +24,7 @@ __pycache__/
 *.pyd
 *.sqlite3
 media/
-mail_config
+uniApp/mail_config.py
 
 # VSCode
 .vscode/
