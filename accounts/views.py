@@ -31,19 +31,27 @@ class RegisterView(View):
         confirm_password = request.POST.get("password2")
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return redirect(request.META.get("HTTP_REFERER"))
+            redirect_url = request.META.get("HTTP_REFERER", reverse('register'))
+            return redirect(redirect_url)
+
         
         if len(password) < 8:
             messages.error(request, "Password must be at least 8 characters.")
-            return redirect(request.META.get("HTTP_REFERER"))
+            redirect_url = request.META.get("HTTP_REFERER", reverse('register'))
+            return redirect(redirect_url)
+
         
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email_address):
             messages.error(request, "Invalid email address format.")
-            return redirect(request.META.get("HTTP_REFERER"))
+            redirect_url = request.META.get("HTTP_REFERER", reverse('register'))
+            return redirect(redirect_url)
+
 
         if CustomUser.objects.filter(email=email_address).exists():
             messages.error(request, "Email already exists.")
-            return redirect(request.META.get("HTTP_REFERER"))
+            redirect_url = request.META.get("HTTP_REFERER", reverse('register'))
+            return redirect(redirect_url)
+
 
         if CodeEmail.objects.filter(email=email_address).exists():
             code_user = CodeEmail.objects.get(email=email_address)
@@ -71,7 +79,9 @@ class RegisterView(View):
             except Exception as e:
                 logger.error(f"Error sending email: {e}")
                 messages.error(request, f"Error sending email: {e}, please try again.")
-                return redirect(request.META.get("HTTP_REFERER"))
+                redirect_url = request.META.get("HTTP_REFERER", reverse('register'))
+            return redirect(redirect_url)
+
         
         generated_code = generate_activation_code()
         context = {
@@ -101,7 +111,9 @@ class RegisterView(View):
         except Exception as e:
             logger.error(f"Error creating CodeEmail or sending email: {e}")
             messages.error(request, f"Error creating CodeEmail or sending email: {e}, please try again.")
-            return redirect(request.META.get("HTTP_REFERER"))
+            redirect_url = request.META.get("HTTP_REFERER", reverse('register'))
+            return redirect(redirect_url)
+
 
         return render(request, self.template_name)
 
