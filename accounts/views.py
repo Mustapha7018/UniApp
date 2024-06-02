@@ -10,14 +10,27 @@ from .models import CustomUser, CodeEmail
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.core.mail import EmailMultiAlternatives
-from django.contrib.auth import authenticate, login
+from django.utils.encoding import force_bytes, force_str
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.contrib.auth.tokens import default_token_generator
 from .utils.functions import (
     generate_activation_code,
     is_expired
 )
+from django.utils.http import (
+    urlsafe_base64_encode,
+    urlsafe_base64_decode
+)
+from django.contrib.auth.views import (
+    PasswordResetView,
+    PasswordResetConfirmView
+)
 
 logger = logging.getLogger(__name__)
 
+''' REGISTER USER '''
 class RegisterView(View):
     template_name = "pages/register.html"
 
@@ -118,7 +131,7 @@ class RegisterView(View):
         return render(request, self.template_name)
 
 
-
+''' VIEW FOR CODE VERIFICATION '''
 class CodeVerificationView(View):
     template_name = "pages/code_verification.html"
 
@@ -145,6 +158,7 @@ class CodeVerificationView(View):
         return render(request, self.template_name, {'form': form})
 
 
+''' VIEW TO LOG IN USERS '''
 class CustomLoginView(View):
     template_name = 'pages/login.html'
 
@@ -157,17 +171,104 @@ class CustomLoginView(View):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            fullname = user.fullname or "User"  
+            fullname = user.fullname or "User"
             first_name = fullname.split()[0] if ' ' in fullname else fullname
             messages.success(request, f"Welcome back, {first_name}!")
-            return redirect('home')  # Redirect to the home page
+
+            next_url = request.POST.get('next')
+            if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+                if 'reset-password' not in next_url:
+                    return redirect(next_url)
+            return redirect('home')
         else:
             messages.error(request, "Invalid email or password. Please try again.")
             return redirect(reverse('login'))
 
 
 
+''' VIEW TO LOG OUT USERS '''
+class LogoutView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login')
+
+
+''' VIEW TO RESET PASSWORD '''
+class ForgotPasswordView(View):
+    template_name = "pages/forgot_password.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            reset_url = reverse_lazy('reset-password', kwargs={'uidb64': uid, 'token': token})
             
+            return redirect(reset_url)
+        except CustomUser.DoesNotExist:
+            messages.error(request, 'Email address not found.')
+            return redirect('forgot-password')
 
 
-        
+''' VIEW TO CONFIRM PASSWORD RESET '''
+class PasswordResetConfirmView(View):
+    template_name = "pages/reset_password.html"
+
+    def get(self, request, uidb64, token, *args, **kwargs):
+        context = {
+            'uidb64': uidb64,
+            'token': token
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, uidb64, token, *args, **kwargs):
+        new_password = request.POST.get('password1')
+        confirm_password = request.POST.get('password2')
+
+        if new_password is None or confirm_password is None:
+            messages.error(request, "Please fill in both password fields.")
+            return redirect('reset-password', uidb64=uidb64, token=token)
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return redirect('reset-password', uidb64=uidb64, token=token)
+
+        if len(new_password) < 8:
+            messages.error(request, "Password must be at least 8 characters.")
+            return redirect('reset-password', uidb64=uidb64, token=token)
+
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = CustomUser.objects.get(pk=uid)
+
+            if default_token_generator.check_token(user, token):
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "Your password has been reset. Please log in.")
+                return redirect('login')
+            else:
+                messages.error(request, "The reset link is invalid or has expired.")
+                return redirect('forgot-password')
+        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+            messages.error(request, "The reset link is invalid or has expired.")
+            return redirect('forgot-password')
+
+
+''' VIEW TO DISPLAY USER PROFILE '''
+class ProfileView(LoginRequiredMixin, View):
+    template_name = 'pages/profile.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+''' VIEW TO DISPLAY FAVORITES '''
+class FavoritesView(LoginRequiredMixin, View):
+    template_name = 'pages/favorites.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)

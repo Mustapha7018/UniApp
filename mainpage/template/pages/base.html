@@ -37,8 +37,17 @@
               <li><a class="nav-special" href="#">Applicants</a></li>
               <li><a class="nav-special" href="#">Resources</a></li>
               <li><a class="nav-special" href="#">About</a></li>
-              <li class="special"><a href="#">Profile</a></li>
+              {% if user.is_authenticated %}
+              <li class="special"><a href="{% url 'profile' %}">Profile</a></li>
+              <li class="special">
+                <a href="{% url 'favorites' %}">Favorites</a>
+              </li>
+              {% else %}
+              <li class="special">
+                <a href="{% url 'register' %}">Register</a>
+              </li>
               <li class="special"><a href="{% url 'login' %}">Login</a></li>
+              {% endif %}
             </ul>
           </div>
         </nav>

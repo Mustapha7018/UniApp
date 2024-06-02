@@ -20,9 +20,7 @@
   </head>
   <body>
     <div class="logo">
-      <a href="/"
-        ><p>uni<span>App</span></p></a
-      >
+      <a href="/"><p>uni<span>App</span></p></a>
     </div>
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }}">
@@ -30,8 +28,7 @@
       <span
         class="alert-close"
         onclick="this.parentElement.style.display='none';"
-        >&times;</span
-      >
+        >&times;</span>
     </div>
     {% endfor %}
 
@@ -64,7 +61,7 @@
           <i class="fa-solid fa-eye-slash"></i>
         </div>
         <button type="submit" class="login-btn"><span>LOGIN</span></button>
-        <p>Forgot password? <a href="#" class="reset-link">Reset here</a></p>
+        <p>Forgot password? <a href="{% url 'forgot-password' %}" class="reset-link">Reset here</a></p>
       </form>
 
       <div class="account">
