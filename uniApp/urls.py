@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 from django.conf.urls.static import static
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail import urls as wagtail_urls
+from wagtail.documents import urls as wagtaildocs_urls
 
 
 urlpatterns = [
@@ -26,6 +29,9 @@ urlpatterns = [
     path('account/', include('accounts.urls')),
     path('debug/', include('debug_toolbar.urls')),
     path('accounts/', include('allauth.urls')),
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
+    path('pages/', include(wagtail_urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

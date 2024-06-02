@@ -30,9 +30,25 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
 
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail',
+
+    'modelcluster',
+    'taggit',
+
     'debug_toolbar',
     'accounts',
     'mainpage',
+    'blogs',
 ]
 
 # SITE_ID = 1
@@ -75,6 +91,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 INTERNAL_IPS = [
@@ -82,6 +99,10 @@ INTERNAL_IPS = [
 ]
 
 ROOT_URLCONF = 'uniApp.urls'
+WAGTAIL_SITE_NAME = 'UniApp Blog'
+WAGTAILADMIN_BASE_URL = 'localhost:8000/wagtail_admin'
+WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
+
 
 TEMPLATES = [
     {
