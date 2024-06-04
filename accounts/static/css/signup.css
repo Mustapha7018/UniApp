@@ -9,7 +9,7 @@
   position: absolute;
   top: 5%;
   left: 5%;
-  z-index: 10; 
+  z-index: 10;
 }
 
 .logo a {
@@ -20,13 +20,12 @@
 .logo p {
   font-size: 1.7rem;
   font-weight: 600;
-  margin: 0; 
+  margin: 0;
 }
 
 .logo p span {
   font-weight: 300;
 }
-
 
 body {
   background: aliceblue;
@@ -70,7 +69,7 @@ section {
 .form-wrapper h2 {
   font-size: 40px;
   font-weight: 600;
-  color: #344F5A;
+  color: #344f5a;
   text-align: left;
   margin-bottom: 1.5rem;
 }
@@ -82,7 +81,7 @@ section {
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  top: 50%;
+  top: 5%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -92,12 +91,12 @@ section {
 }
 
 .alert-success {
-  background-color: #00A28E;
+  background-color: #00a28e;
   color: white;
 }
 
 .alert-error {
-  background-color: #FF5656;
+  background-color: #ff5656;
   color: white;
 }
 
@@ -120,7 +119,7 @@ section {
 .input-group {
   position: relative;
   margin: 40px 0;
-  border-bottom: 2px solid #DBE1E4;
+  border-bottom: 2px solid #dbe1e4;
 }
 
 .input-group label {
@@ -129,7 +128,7 @@ section {
   left: 0;
   transform: translateY(-50%);
   font-size: 16px;
-  color: #344F5A;
+  color: #344f5a;
   pointer-events: none;
   transition: 0.3s ease;
 }
@@ -138,7 +137,7 @@ section {
   width: 400px;
   height: 45px;
   font-size: 16px;
-  color: #344F5A;
+  color: #344f5a;
   padding: 0 5px;
   background: transparent;
   border: none;
@@ -157,11 +156,11 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: #344F5A;
+  -webkit-text-fill-color: #344f5a;
 }
 
 form p {
-  color: #344F5A;
+  color: #344f5a;
   font-size: 1.1rem;
 }
 
@@ -172,7 +171,7 @@ form p {
   font-size: 16px;
   font-weight: normal;
   color: #fff;
-  background: #37A8EC;
+  background: #37a8ec;
   border: none;
   cursor: pointer;
   margin-top: 1.5rem;
@@ -188,12 +187,12 @@ form p {
 }
 
 .signup-btn::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 50px;
   height: 155px;
   background: #fff;
-  opacity: .2;
+  opacity: 0.2;
   top: -50px;
   left: -75px;
   transform: rotate(35deg);
@@ -207,19 +206,19 @@ form p {
 
 .login-link {
   position: relative;
-  color: #37A8EC;
+  color: #37a8ec;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .login-link::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 2px;
   bottom: -3px;
   left: 0;
-  background-color: #37A8EC;
+  background-color: #37a8ec;
   visibility: hidden;
   transform: scaleX(0);
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s;
@@ -229,20 +228,22 @@ form p {
 .login-link:hover::after {
   visibility: visible;
   transform: scaleX(1);
-  transition: transform 0.3s cubic-bezier(0.2, 1, 0.82, 0.94), visibility 0s linear 0s;
+  transition: transform 0.3s cubic-bezier(0.2, 1, 0.82, 0.94),
+    visibility 0s linear 0s;
   transform-origin: 0% 0%;
 }
 
 .login-link:focus::after {
   visibility: visible;
   transform: scaleX(1);
-  transition: transform 0.3s cubic-bezier(0.2, 1, 0.82, 0.94), visibility 0s linear 0s;
+  transition: transform 0.3s cubic-bezier(0.2, 1, 0.82, 0.94),
+    visibility 0s linear 0s;
   transform-origin: 0% 0%;
 }
 
 @media (max-width: 600px) {
   body {
-    background-image: url('../images/signup-img.png');
+    background-image: url("../images/signup-img.png");
     object-fit: cover;
     background-position: center center;
   }
@@ -267,7 +268,7 @@ form p {
   }
 
   .input-group label {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   section .image-box {
@@ -292,8 +293,12 @@ form p {
     border-radius: 10px;
     width: 100%;
     padding: 40px;
-    background: rgb(59,42,248);
-    background: linear-gradient(110deg, rgba(59,42,248,1) 0%, rgba(71,202,250,1) 100%);
+    background: rgb(59, 42, 248);
+    background: linear-gradient(
+      110deg,
+      rgba(59, 42, 248, 1) 0%,
+      rgba(71, 202, 250, 1) 100%
+    );
     margin: 50px;
   }
 
@@ -303,14 +308,14 @@ form p {
   }
 
   section .wrapper .form-wrapper form p {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   section .wrapper .form-wrapper .signup-btn {
     width: 100%;
     height: 45px;
     font-size: 16px;
-    color: #37A8EC;
+    color: #37a8ec;
     background: #fff;
     border: none;
     font-weight: 500;
@@ -363,8 +368,12 @@ form p {
     border-radius: 10px;
     width: 100%;
     padding: 40px;
-    background: rgb(59,42,248);
-    background: linear-gradient(110deg, rgba(59,42,248,1) 0%, rgba(71,202,250,1) 100%);
+    background: rgb(59, 42, 248);
+    background: linear-gradient(
+      110deg,
+      rgba(59, 42, 248, 1) 0%,
+      rgba(71, 202, 250, 1) 100%
+    );
     margin: 50px;
   }
 
@@ -374,14 +383,14 @@ form p {
   }
 
   section .wrapper .form-wrapper form p {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   section .wrapper .form-wrapper .signup-btn {
     width: 100%;
     height: 45px;
     font-size: 16px;
-    color: #37A8EC;
+    color: #37a8ec;
     background: #fff;
     border: none;
     font-weight: 500;

@@ -100,7 +100,7 @@ INTERNAL_IPS = [
 
 ROOT_URLCONF = 'uniApp.urls'
 WAGTAIL_SITE_NAME = 'UniApp Blog'
-WAGTAILADMIN_BASE_URL = 'localhost:8000/wagtail_admin'
+WAGTAILADMIN_BASE_URL = 'http://localhost:8000/cms'
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
 
 
@@ -108,8 +108,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'mainpage', 'template'),
-            os.path.join(BASE_DIR, 'accounts', 'template'),
+            os.path.join(BASE_DIR, 'mainpage', 'templates'),  
+            os.path.join(BASE_DIR, 'accounts', 'templates'),  
+            os.path.join(BASE_DIR, 'blogs', 'templates'),   
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -123,6 +124,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'uniApp.wsgi.application'
 

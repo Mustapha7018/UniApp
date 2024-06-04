@@ -34,5 +34,3 @@ urlpatterns = [
     path('pages/', include(wagtail_urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-
-
