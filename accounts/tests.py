@@ -5,6 +5,9 @@ from .models import CodeEmail
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
+from wagtail.models import Page
+from blogs.models import BlogIndexPage, BlogPage
+from django.utils import timezone
 
 CustomUser = get_user_model()
 
@@ -15,7 +18,31 @@ class ViewTests(TestCase):
         self.client = Client()
         self.register_url = reverse('register')  
         self.verify_url = reverse('verify')  
-        self.login_url = reverse('login')  
+        self.login_url = reverse('login')
+
+        Page.objects.filter(slug='home').delete()
+
+        root = Page.objects.get(id=1)
+        home_page = Page(title="Home", slug="home")
+        root.add_child(instance=home_page)
+        home_page.save()
+
+        # Create a BlogIndexPage and some BlogPages
+        self.blog_index = BlogIndexPage(title="Blog", slug="blog")
+        home_page.add_child(instance=self.blog_index)
+        self.blog_index.save()
+
+        for i in range(3):
+            blog_page = BlogPage(
+                title=f"Blog Post {i+1}",
+                date=timezone.now(),
+                slug=f"blog-post-{i+1}",
+                body="This is a test blog post.",
+                intro="This is the intro for the blog post."
+            )
+            self.blog_index.add_child(instance=blog_page)
+            blog_page.save()
+
 
     def test_register_view_get(self):
         response = self.client.get(self.register_url)

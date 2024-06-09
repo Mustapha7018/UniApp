@@ -1,16 +1,62 @@
-{% load wagtailcore_tags %}
-
-{% block body_class %}template-blogindexpage{% endblock %}
-
+{% extends 'blog/base_blog.html' %}
+{% load wagtailcore_tags wagtailimages_tags %} 
+{% load static %} 
 {% block content %}
-    <h1>{{ page.title }}</h1>
 
-    <div class="intro">{{ page.intro|richtext }}</div>
-
-    {% for post in page.get_children %}
-        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
-        {{ post.specific.intro }}
-        {{ post.specific.body|richtext }}
+<section class="latest-blog">
+  <h4>Latest Blog</h4>
+  <div class="blog-grid">
+    {% for post in posts %}
+    <div class="blog-card">
+      {% if post.featured_image %} 
+      {% image post.featured_image original %} 
+      {% endif %}
+      <div class="blog-content">
+        <a href="{{ post.url }}">
+          <h5>{{ post.title|truncatechars:80 }}</h5>
+        </a>
+        <p class="date">{{ post.date|date:"F d, Y" }}</p>
+      </div>
+    </div>
     {% endfor %}
+  </div>
+</section>
 
+<section class="faqs__section">
+  <h2>FAQs</h2>
+  <button class="accordion">How the platform works</button>
+  <div class="panel">
+    <p>
+      Sign up, set preferences, explore options, and connect directly with
+      universities — all in one seamless platform.
+    </p>
+  </div>
+
+  <button class="accordion">Data privacy</button>
+  <div class="panel">
+    <p>
+      We collect your full name, email, location, and academic background to
+      personalize your experience and ensure secure authentication. We
+      prioritize data protection and transparency. You have the right to manage
+      your information in your account settings
+    </p>
+  </div>
+
+  <button class="accordion">Support services</button>
+  <div class="panel">
+    <p>
+      Our support team is dedicated to providing exceptional service and
+      assistance to ensure your experience with uniApp is smooth and enjoyable.
+      Whether you need help navigating the platform, have questions about the
+      application process, or require technical support, we are here to help.
+      You can send your inquiries to
+      <strong>uniapp135@gmail.com</strong>
+    </p>
+    <p>
+      At uniApp, we are committed to ensuring you have the resources and support
+      you need to achieve your educational goals. Don't hesitate to reach out to
+      us for any assistance.
+    </p>
+  </div>
+</section>
 {% endblock %}

@@ -1,15 +1,47 @@
-{% load wagtailcore_tags %}
+{% extends 'blog/base_blog.html' %}
+{% load wagtailcore_tags wagtailimages_tags %} 
+{% load static %} {% block content %}
+<section class="blog__section">
+  <div class="blog__container">
+    <div class="blog-header">
+      <h3>{{ page.title }}</h3>
+    </div>
+    <div class="blog-info">
+      <p>{{ page.date|date:"F d, Y" }}, by {{ page.author }}</p>
+    </div>
+  </div>
 
-{% block body_class %}template-blogpage{% endblock %}
-
-{% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
-
-    <div class="intro">{{ page.intro }}</div>
-
-    {{ page.body|richtext }}
-
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+  <div class="blog__section__container">
+    {% if page.featured_image %}
+    <div class="blog__img">
+      {% image page.featured_image fill-800x400-c100 %}
+      <p class="image-description" style="font-size: 0.8rem; margin-top: 1rem;">
+        {% if page.image_description %}
+        {{ page.image_description }}
+        {% endif %}
+      </p>
+    </div>
+    {% endif %}
+    <div class="blog__description">{{ page.body|richtext }}</div>
+  </div>
+</section>
+<section class="latest-blog single_blog_style">
+  <h4>Recommended Articles</h4>
+  <div class="blog-grid">
+    {% for post in recommended_posts %}
+    <div class="blog-card">
+      {% if post.featured_image %}
+      {% image page.featured_image original %}
+      {% endif %}
+      <div class="blog-content">
+        <a href="{{ post.url }}">
+          <h5>{{ post.title|truncatechars:80 }}</h5>
+        </a>
+        <p class="date">{{ post.date|date:"F d, Y" }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
 
 {% endblock %}

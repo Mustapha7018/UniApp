@@ -1,5 +1,6 @@
 {% extends "pages/base.html" %}
 {% load static %}
+{% load wagtailcore_tags wagtailimages_tags %} 
 {% block content %}
 <section class="toggle__section">
   <div class="container">
@@ -124,50 +125,21 @@
 <section class="blog__section">
   <span class="text-wrapper"><span></span>Blog</span>
   <div class="blog-container">
+    {% for post in latest_posts %}
     <div class="blog-card">
-      <img
-        src="{% static 'images/blog-img1.png' %}"
-        alt="Graduation Celebration"
-      />
+      {% if post.featured_image %}
+      {% image post.featured_image original %}
+      {% endif %}
       <div class="blog-content">
-        <a href="">
-          <p>
-            Graduation Time. What's next? How graduates are advised to prepare
-            for the real world...
-          </p>
+        <a href="{{ post.url }}">
+          <p>{{ post.title|truncatechars:80 }}</p>
         </a>
-        <span>Nov 20, 2023</span>
+        <span>{{ post.date|date:"F d, Y" }}</span>
       </div>
     </div>
-    <div class="blog-card">
-      <img
-        src="{% static 'images/blog-img2.png' %}"
-        alt="Friends Celebrating Graduation"
-      />
-      <div class="blog-content">
-        <a href="">
-          <p>
-            Graduation Time. What's next? How graduates are advised to prepare
-            for the real world...
-          </p>
-        </a>
-        <span>Oct 13, 2023</span>
-      </div>
-    </div>
-    <div class="blog-card">
-      <img src="{% static 'images/blog-img3.png' %}" alt="Graduate Smiling" />
-      <div class="blog-content">
-        <a href="">
-          <p>
-            Graduation Time. What's next? How graduates are advised to prepare
-            for the real world...
-          </p>
-        </a>
-        <span>Sep 09, 2023</span>
-      </div>
-    </div>
+    {% endfor %}
   </div>
-  <button>Read More</button>
+  <a href="{% pageurl blog_index_page %}"><button>Read More</button></a>
 </section>
 
 <section class="social__proof__section">
