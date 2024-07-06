@@ -24,16 +24,17 @@
           ><p>uni<span>App</span></p></a
         >
       </div>
+      {% if messages %}
       {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">
-        <p>{{ message }}</p>
-        <span
-          class="alert-close"
-          onclick="this.parentElement.style.display='none';"
-          >&times;</span
-        >
-      </div>
+        <div class="alert alert-{{ message.tags }}">
+          <p>
+            <strong>{{ message.tags|title }}</strong><br>
+            {{ message }}
+          </p>
+          <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
       {% endfor %}
+    {% endif %}
       <div class="wrapper">
         <div class="form-wrapper reset">
           <form action="{% url 'verify' %}" method="post">

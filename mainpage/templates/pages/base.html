@@ -15,16 +15,17 @@
   <body>
     <div class="main-container">
       <header>
-        {% if messages %} {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          <p>{{ message }}</p>
-          <span
-            class="alert-close"
-            onclick="this.parentElement.style.display='none';"
-            >&times;</span
-          >
-        </div>
-        {% endfor %} {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            <p>
+              <strong>{{ message.tags|title }}</strong><br>
+              {{ message }}
+            </p>
+            <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
+          </div>
+        {% endfor %}
+      {% endif %}
         <nav class="navbar">
           <div class="left-side">
             <a href="#" class="nav-logo">uni<span>App</span></a>

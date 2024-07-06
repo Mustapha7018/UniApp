@@ -143,6 +143,62 @@ nav a.nav-special:hover {
   transform: translateY(-5px);
 }
 
+.alert {
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success {
+  background-color: #E6FFFA; 
+  border-color: #00A28E; 
+  color: #00A28E; 
+}
+
+.alert-error {
+  background-color: #FFE6E6; 
+  border-color: #FF5656; 
+  color: #FF5656;
+}
+
+.alert p {
+  margin: 0;
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.alert .alert-close {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.alert .alert-icon {
+  font-size: 24px;
+}
+
+.alert-success .alert-icon {
+  color: #00A28E;
+}
+
+.alert-error .alert-icon {
+  color: #FF5656;
+}
+
+
 /* HAMBURGER MENU */
 .hamburger {
   display: none;
