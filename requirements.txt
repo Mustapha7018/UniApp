@@ -17,6 +17,7 @@ django-permissionedforms==0.1
 django-rest-framework-social-oauth2==1.2.0
 django-taggit==5.0.1
 django-treebeard==4.7.1
+django-unfold== 0.30.0
 djangorestframework==3.15.1
 draftjs-exporter==5.0.0
 et-xmlfile==1.1.0
