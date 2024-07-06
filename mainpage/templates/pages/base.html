@@ -79,13 +79,12 @@
       <main>
         <div class="breadcrumb">
           <p>
-              <a href="/">Home</a>
               {% for ancestor in page.get_ancestors %}
                   {% if not ancestor.is_root %}
-                      > <a href="{{ ancestor.url }}">{{ ancestor.title|truncatechars:30 }}</a>
+                      <a href="{{ ancestor.url }}">{{ ancestor.title|truncatechars:30 }}</a>
                   {% endif %}
               {% endfor %}
-              > {{ page.title|truncatechars:20 }}
+              {{ page.title|truncatechars:20 }}
           </p>
       </div>     
         {% block content %}
