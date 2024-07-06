@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, CodeEmail
+from .models import CustomUser, CodeEmail, ResetPasswordCode
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from .forms import CustomUserCreationForm, CustomUserChangeForm
@@ -8,6 +8,12 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 class CodeEmailAdmin(admin.ModelAdmin):
     list_display = ('email', 'fullname', 'code', 'created_at')
     search_fields = ('email', 'fullname')
+
+
+@admin.register(ResetPasswordCode)
+class ResetPasswordCodeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'code', 'created_at')
+    search_fields = ('user', 'code')
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):

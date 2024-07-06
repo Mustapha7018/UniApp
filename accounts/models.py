@@ -52,3 +52,9 @@ class CodeEmail(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class ResetPasswordCode(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)

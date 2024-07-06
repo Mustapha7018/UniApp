@@ -18,11 +18,5 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('fullname', 'email', 'academic_background', 'location')
 
 
-class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.EmailField(label='Email')
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
-
-class CodeVerificationForm(forms.Form):
-    code = forms.IntegerField(label='Verification Code', min_value=100000, max_value=999999)
 

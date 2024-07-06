@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
-from .models import CustomUser, CodeEmail
+from .models import CustomUser, CodeEmail, ResetPasswordCode
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.core.mail import EmailMultiAlternatives
@@ -204,11 +204,35 @@ class ForgotPasswordView(View):
         email = request.POST.get('email')
         try:
             user = CustomUser.objects.get(email=email)
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            reset_url = reverse_lazy('reset-password', kwargs={'uidb64': uid, 'token': token})
+            generated_code = generate_activation_code()  
             
-            return redirect(reset_url)
+            ResetPasswordCode.objects.create(user=user, code=generated_code)
+            
+            # Prepare email content
+            context = {
+                "generated_code": generated_code,
+                "user": user,
+            }
+            html_message = render_to_string("pages/verify.html", context)
+            plain_message = strip_tags(html_message)
+
+            # Send email with verification code
+            subject = "Password Reset Verification Code"
+            try:
+                message = EmailMultiAlternatives(
+                    subject=subject,
+                    body=plain_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    to=[email],
+                )
+                message.attach_alternative(html_message, 'text/html')
+                message.send()
+                messages.success(request, 'Verification code sent to your email.')
+                return redirect('reset-password')
+            except Exception as e:
+                logger.error(f"Error sending email: {e}")
+                messages.error(request, f"Error sending email: {e}, please try again.")
+                return redirect('forgot-password')
         except CustomUser.DoesNotExist:
             messages.error(request, 'Email address not found.')
             return redirect('forgot-password')
@@ -218,44 +242,42 @@ class ForgotPasswordView(View):
 class PasswordResetConfirmView(View):
     template_name = "pages/reset_password.html"
 
-    def get(self, request, uidb64, token, *args, **kwargs):
-        context = {
-            'uidb64': uidb64,
-            'token': token
-        }
-        return render(request, self.template_name, context)
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
-    def post(self, request, uidb64, token, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        verification_code = request.POST.get('verification_code')
         new_password = request.POST.get('password1')
         confirm_password = request.POST.get('password2')
 
-        if new_password is None or confirm_password is None:
-            messages.error(request, "Please fill in both password fields.")
-            return redirect('reset-password', uidb64=uidb64, token=token)
+        if not all([verification_code, new_password, confirm_password]):
+            messages.error(request, "Please fill in all fields.")
+            return redirect('reset-password')
 
         if new_password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return redirect('reset-password', uidb64=uidb64, token=token)
+            return redirect('reset-password')
 
         if len(new_password) < 8:
             messages.error(request, "Password must be at least 8 characters.")
-            return redirect('reset-password', uidb64=uidb64, token=token)
+            return redirect('reset-password')
 
         try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            user = CustomUser.objects.get(pk=uid)
+            reset_code = ResetPasswordCode.objects.get(code=verification_code)
+            user = reset_code.user
 
-            if default_token_generator.check_token(user, token):
-                user.set_password(new_password)
-                user.save()
-                messages.success(request, "Your password has been reset. Please log in.")
-                return redirect('login')
-            else:
-                messages.error(request, "The reset link is invalid or has expired.")
+            if is_expired(reset_code.created_at): 
+                messages.error(request, "The verification code has expired.")
                 return redirect('forgot-password')
-        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
-            messages.error(request, "The reset link is invalid or has expired.")
-            return redirect('forgot-password')
+
+            user.set_password(new_password)
+            user.save()
+            reset_code.delete()
+            messages.success(request, "Your password has been reset. Please log in.")
+            return redirect('login')
+        except ResetPasswordCode.DoesNotExist:
+            messages.error(request, "Invalid verification code.")
+            return redirect('reset-password')
 
 
 ''' VIEW TO DISPLAY USER PROFILE '''

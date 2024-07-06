@@ -1,13 +1,14 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from .models import CodeEmail
+from .models import CodeEmail, CustomUser, ResetPasswordCode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from wagtail.models import Page
 from blogs.models import BlogIndexPage, BlogPage
 from django.utils import timezone
+from .utils.functions import generate_activation_code
 
 CustomUser = get_user_model()
 
@@ -160,10 +161,7 @@ class PasswordResetTests(TestCase):
         self.login_url = reverse('login')
         self.logout_url = reverse('logout')
         self.forgot_password_url = reverse('forgot-password')
-        self.reset_password_url = reverse('reset-password', kwargs={
-            'uidb64': urlsafe_base64_encode(force_bytes(self.user.pk)),
-            'token': default_token_generator.make_token(self.user)
-        })
+        self.reset_password_url = reverse('reset-password')
 
     def test_logout_view(self):
         self.client.login(email='test@example.com', password='password123')
@@ -180,6 +178,7 @@ class PasswordResetTests(TestCase):
         response = self.client.post(self.forgot_password_url, {'email': 'test@example.com'})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.reset_password_url)
+        self.assertTrue(ResetPasswordCode.objects.filter(user=self.user).exists())
 
     def test_forgot_password_view_post_user_does_not_exist(self):
         response = self.client.post(self.forgot_password_url, {'email': 'nonexistent@example.com'})
@@ -195,7 +194,9 @@ class PasswordResetTests(TestCase):
         self.assertTemplateUsed(response, 'pages/reset_password.html')
 
     def test_password_reset_confirm_view_post_success(self):
+        reset_code = ResetPasswordCode.objects.create(user=self.user, code=generate_activation_code())
         reset_data = {
+            'verification_code': reset_code.code,
             'password1': 'newpassword123',
             'password2': 'newpassword123'
         }
@@ -207,9 +208,12 @@ class PasswordResetTests(TestCase):
         self.assertEqual(str(messages[0]), 'Your password has been reset. Please log in.')
         self.user.refresh_from_db()
         self.assertTrue(self.user.check_password('newpassword123'))
+        self.assertFalse(ResetPasswordCode.objects.filter(user=self.user).exists())
 
     def test_password_reset_confirm_view_post_passwords_do_not_match(self):
+        reset_code = ResetPasswordCode.objects.create(user=self.user, code=generate_activation_code())
         reset_data = {
+            'verification_code': reset_code.code,
             'password1': 'newpassword123',
             'password2': 'differentpassword123'
         }
@@ -221,7 +225,9 @@ class PasswordResetTests(TestCase):
         self.assertEqual(str(messages[0]), 'Passwords do not match.')
 
     def test_password_reset_confirm_view_post_password_too_short(self):
+        reset_code = ResetPasswordCode.objects.create(user=self.user, code=generate_activation_code())
         reset_data = {
+            'verification_code': reset_code.code,
             'password1': 'short',
             'password2': 'short'
         }
@@ -232,18 +238,24 @@ class PasswordResetTests(TestCase):
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), 'Password must be at least 8 characters.')
 
-    def test_password_reset_confirm_view_post_invalid_link(self):
-        invalid_reset_url = reverse('reset-password', kwargs={
-            'uidb64': 'invalid',
-            'token': 'invalid-token'
-        })
+    def test_password_reset_confirm_view_post_invalid_code(self):
         reset_data = {
+            'verification_code': 'invalid_code',
             'password1': 'newpassword123',
             'password2': 'newpassword123'
         }
-        response = self.client.post(invalid_reset_url, reset_data)
+        response = self.client.post(self.reset_password_url, reset_data)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, self.forgot_password_url)
+        self.assertRedirects(response, self.reset_password_url)
         messages = list(response.wsgi_request._messages)
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'The reset link is invalid or has expired.')
+        self.assertEqual(str(messages[0]), 'Invalid verification code.')
+
+    def test_password_reset_confirm_view_post_missing_fields(self):
+        reset_data = {}  # Empty data
+        response = self.client.post(self.reset_password_url, reset_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, self.reset_password_url)
+        messages = list(response.wsgi_request._messages)
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), 'Please fill in all fields.')
