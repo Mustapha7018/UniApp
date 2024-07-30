@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class HomePageTests(TestCase):
     def setUp(self):
-        Page.objects.filter(slug='home').delete()
+        Page.objects.filter(slug="home").delete()
 
         root = Page.objects.get(id=1)
         home_page = Page(title="Home", slug="home")
@@ -26,7 +26,7 @@ class HomePageTests(TestCase):
                 date=timezone.now(),
                 slug=f"blog-post-{i+1}",
                 body="This is a test blog post.",
-                intro="This is the intro for the blog post."
+                intro="This is the intro for the blog post.",
             )
             self.blog_index.add_child(instance=blog_page)
             blog_page.save()
@@ -38,4 +38,3 @@ class HomePageTests(TestCase):
     def test_home_url_resolve(self):
         view = resolve("/")
         self.assertEqual(view.func.__name__, HomeView.as_view().__name__)
-

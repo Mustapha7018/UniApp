@@ -1,7 +1,190 @@
-<h1>Profile Page</h1>
-<p>Welcome to your profile page, {{ user.fullname }}.</p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>uniApp | Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                <p>
+                  <strong>{{ message.tags|title }}</strong><br>
+                  {{ message }}
+                </p>
+                <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+            <nav class="navbar">
+                <a href="/">
+                  <div class="navbar-brand"><span class="brand-bold">uni</span>App</div>
+                </a>
+                <div class="navbar-user">
+                    {{ request.user.fullname }}
+                    <img
+                      src="{{ request.user.profile_picture.url }}"
+                      alt="User Avatar"
+                      class="user-avatar"
+                    />
+                </div>
+            </nav>
+            <div class="hero">
+                <div class="profile-header">
+                    <img
+                      src="{{ request.user.profile_picture.url }}"
+                      alt="Profile Picture"
+                      class="profile-picture"
+                      id="profile-picture"
+                    />
+                </div>
+            </div>
+        </header>
 
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+        <main>
+            <div class="profile-container">
+                <h2 class="profile-name">{{ request.user.fullname }}</h2>
+                <div class="tabs">
+                    <button class="tablinks active" onclick="openTab(event, 'Account')">
+                      Account
+                    </button>
+                    <button class="tablinks" onclick="openTab(event, 'Favorites')">
+                      Favorites
+                    </button>
+                </div>
+                <div id="Account" class="tabcontent">
+                    <form method="post" action="{% url 'profile-update' %}" enctype="multipart/form-data" id="profile-picture-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="full-name">Full Name (eg. John Doe)</label>
+                            <input
+                              type="text"
+                              id="full-name"
+                              name="fullname"
+                              value="{{ form.fullname.value|default:'' }}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email (eg. john@gmail.com)</label>
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              value="{{ form.email.value }}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="course">Academic Background (eg. Science)</label>
+                            <input
+                              type="text"
+                              id="course"
+                              name="course"
+                              value="{{ form.course.value|default:'' }}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location (eg. Accra)</label>
+                            <input
+                              type="text"
+                              id="location"
+                              name="location"
+                              value="{{ form.location.value|default:'' }}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="preferred-course">Preferred Course (eg. Nursing)</label>
+                            <input
+                              type="text"
+                              id="preferred-course"
+                              name="preferred_course"
+                              value="{{ form.preferred_course.value|default:'' }}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="aggregate">Aggregate (eg. 6)</label>
+                            <input
+                              type="text"
+                              id="aggregate"
+                              name="aggregate"
+                              value="{{ form.aggregate.value|default:'' }}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-picture">Profile Picture</label>
+                            <input
+                              type="file"
+                              id="profile-picture"
+                              name="profile_picture"
+                              accept="image/*"
+                              class="form-control"
+                            />
+                        </div>
+                        <div class="form-actions">
+                            <div class="left-actions">
+                                <button type="submit" class="btn update-btn">Update</button>
+                            </div>
+                            <div class="right-actions">
+                                <a href="#" class="delete-link" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete account</a>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn logout-btn">Logout</button>
+                    </form>
+                </div>
+                <div id="Favorites" class="tabcontent" style="display: none">
+                    <p class="empty-favorites">You haven't added any favorites yet.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Include the delete modal HTML here -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Account Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete your account? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form method="post" action="{% url 'delete-account' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            console.log('Tab clicked:', tabName);
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

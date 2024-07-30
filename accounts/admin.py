@@ -4,16 +4,18 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
+
 @admin.register(CodeEmail)
 class CodeEmailAdmin(admin.ModelAdmin):
-    list_display = ('email', 'fullname', 'code', 'created_at')
-    search_fields = ('email', 'fullname')
+    list_display = ("email", "fullname", "code", "created_at")
+    search_fields = ("email", "fullname")
 
 
 @admin.register(ResetPasswordCode)
 class ResetPasswordCodeAdmin(admin.ModelAdmin):
-    list_display = ('user', 'code', 'created_at')
-    search_fields = ('user', 'code')
+    list_display = ("user", "code", "created_at")
+    search_fields = ("user", "code")
+
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -22,25 +24,36 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('fullname', 'academic_background', 'location')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        (None, {"fields": ("email", "password")}),
+        ("Personal info", {"fields": ("fullname", "course", "location")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
 
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('fullname', 'email', 'password1', 'password2'),
-        }),
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("fullname", "email", "password1", "password2"),
+            },
+        ),
     )
 
-    list_display = ('fullname', 'email', 'academic_background', 'location', 'is_active', 'is_staff', 'is_superuser')
-    list_display_links = ('email',)
-    search_fields = ('fullname', 'email', 'academic_background', 'location')
-    ordering = ('fullname',)
+    list_display = (
+        "fullname",
+        "email",
+        "course",
+        "location",
+        "is_active",
+        "is_staff",
+        "is_superuser",
+    )
+    list_display_links = ("email",)
+    search_fields = ("fullname", "email", "course", "location")
+    ordering = ("fullname",)
 
 
-admin.site.site_header = _('UniApp Administration')
-admin.site.site_title = _('UniApp Admin Portal')
-admin.site.index_title = _('Welcome to UniApp Admin Portal')
+admin.site.site_header = _("UniApp Administration")
+admin.site.site_title = _("UniApp Admin Portal")
+admin.site.index_title = _("Welcome to UniApp Admin Portal")

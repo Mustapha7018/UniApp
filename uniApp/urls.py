@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
@@ -24,15 +25,16 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('mainpage.urls')),
-    path('account/', include('accounts.urls')),
-    path('debug/', include('debug_toolbar.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('cms/', include(wagtailadmin_urls)),
-    path('documents/', include(wagtaildocs_urls)),
-    path('blogs/', include(wagtail_urls)),
+    path("admin/", admin.site.urls),
+    path("", include("mainpage.urls")),
+    path("account/", include("accounts.urls")),
+    path("debug/", include("debug_toolbar.urls")),
+    path("accounts/", include("allauth.urls")),
+    path("cms/", include(wagtailadmin_urls)),
+    path("documents/", include(wagtaildocs_urls)),
+    path("blogs/", include(wagtail_urls)),
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,19 +4,19 @@ from django.db import models
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
 
         return self._create_user(email, password, **extra_fields)
 
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError('The Email Address field must be set')
+            raise ValueError("The Email Address field must be set")
         email_address = self.normalize_email(email)
         return self._create_user(email, password, **extra_fields)
 
@@ -26,21 +26,27 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    academic_background = models.TextField(blank=True, null=True)
+    new_email = models.EmailField(blank=True, null=True)
+    email_verified = models.BooleanField(default=False)
     location = models.CharField(max_length=255, blank=True, null=True)
     fullname = models.CharField(max_length=255, blank=False, null=False)
+    course = models.CharField(max_length=255, blank=True, null=True)
+    preferred_course = models.CharField(max_length=255, blank=True, null=True)
+    aggregate = models.IntegerField(blank=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to="profile_pictures/", default="images/profile_img.png"
+    )
 
-
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()  
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.email
-
 
 
 class CodeEmail(models.Model):

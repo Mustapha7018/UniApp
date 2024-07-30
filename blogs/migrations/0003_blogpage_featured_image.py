@@ -7,14 +7,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blogs', '0002_blogpage'),
-        ('wagtailimages', '0026_delete_uploadedimage'),
+        ("blogs", "0002_blogpage"),
+        ("wagtailimages", "0026_delete_uploadedimage"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogpage',
-            name='featured_image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image'),
+            model_name="blogpage",
+            name="featured_image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailimages.image",
+            ),
         ),
     ]

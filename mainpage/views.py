@@ -2,12 +2,15 @@ from django.views.generic import TemplateView
 from wagtail.models import Page
 from blogs.models import BlogIndexPage, BlogPage
 
+
 class HomeView(TemplateView):
-    template_name = 'pages/home.html'
+    template_name = "pages/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         blog_index = BlogIndexPage.objects.live().first()
-        context['latest_posts'] = BlogPage.objects.live().order_by('-date')[:3] if blog_index else []
-        context['blog_index_page'] = blog_index
+        context["latest_posts"] = (
+            BlogPage.objects.live().order_by("-date")[:3] if blog_index else []
+        )
+        context["blog_index_page"] = blog_index
         return context

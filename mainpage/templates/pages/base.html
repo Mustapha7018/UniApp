@@ -39,7 +39,7 @@
               <li><a class="nav-special" href="#">Resources</a></li>
               <li><a class="nav-special" href="#">About</a></li>
               {% if user.is_authenticated %}
-              <li class="special"><a href="{% url 'profile' %}">Profile</a></li>
+              <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
               <li class="special">
                 <a href="{% url 'favorites' %}">Favorites</a>
               </li>

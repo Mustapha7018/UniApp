@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blogs', '0003_blogpage_featured_image'),
+        ("blogs", "0003_blogpage_featured_image"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogpage',
-            name='author',
+            model_name="blogpage",
+            name="author",
             field=models.CharField(blank=True, max_length=250, null=True),
         ),
     ]

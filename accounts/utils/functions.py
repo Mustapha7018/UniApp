@@ -9,5 +9,3 @@ def generate_activation_code():
 
 def is_expired(created_at, expiration_time=timedelta(minutes=15)):
     return timezone.now() > (created_at + expiration_time)
-
-
