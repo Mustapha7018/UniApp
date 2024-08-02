@@ -14,3 +14,16 @@ class HomeView(TemplateView):
         )
         context["blog_index_page"] = blog_index
         return context
+
+
+class AboutView(TemplateView):
+    template_name = "pages/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        breadcrumb = [
+            {"title": "Home", "url": "/"},
+            {"title": "About", "url": "/about/"},
+        ]
+        context["breadcrumb"] = breadcrumb
+        return context

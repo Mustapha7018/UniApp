@@ -103,23 +103,26 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   
   
-  // Scroll to top
-  var mybutton = document.getElementById("scrollToTop");
-  
-  window.onscroll = function() {scrollFunction()};
-  
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      mybutton.style.display = "block";
-    } else {
-      mybutton.style.display = "none";
-    }
+// Scroll to top
+var mybutton = document.getElementById("scrollToTop");
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
   }
-  
-  function scrollToTop() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
-  }
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
   
   // Year copyright
   document.addEventListener('DOMContentLoaded', () => {
@@ -151,4 +154,20 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+    // Accordion
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
+    }
   

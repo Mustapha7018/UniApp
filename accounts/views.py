@@ -332,6 +332,8 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
                     self.request, f"Error sending email: {e}, please try again"
                 )
                 return super().form_invalid(form)
+        else:
+            user.save()
 
         messages.success(self.request, "Profile updated successfully.")
         return super().form_valid(form)

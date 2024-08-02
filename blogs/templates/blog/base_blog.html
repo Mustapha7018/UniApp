@@ -26,9 +26,9 @@
             <ul class="nav-links">
               <li><a class="nav-special" href="#">Applicants</a></li>
               <li><a class="nav-special" href="#">Resources</a></li>
-              <li><a class="nav-special" href="#">About</a></li>
+              <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
               {% if user.is_authenticated %}
-              <li class="special"><a href="{% url 'profile' %}">Profile</a></li>
+              <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
               <li class="special">
                 <a href="{% url 'favorites' %}">Favorites</a>
               </li>
@@ -125,8 +125,8 @@
             <div class="contact-us">
               <h3>Contact Us</h3>
               <ul>
-                <li><a class="unlink" href="#">uniapp@gmail.com</a></li>
-                <li><a class="unlink" href="#">0233 555 660 7309</a></li>
+                <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
+                <li><a class="unlink" href="#">+233 544 72 6002</a></li>
                 <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
                 <li><a class="unlink" href="#">Accra, Ghana</a></li>
               </ul>

@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About uniApp</title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+        <header>
+            <nav class="navbar">
+              <div class="left-side">
+                <a href="/" class="nav-logo">uni<span>App</span></a>
+              </div>
+              <div class="hamburger" id="hamburger">
+                <i class="fa fa-bars" id="bars-icon"></i>
+              </div>
+              <div class="right-side" id="right-side">
+                <ul class="nav-links">
+                  <li><a class="nav-special" href="#">Applicants</a></li>
+                  <li><a class="nav-special" href="#">Resources</a></li>
+                  <li><a class="nav-special" href="#">About</a></li>
+                  {% if user.is_authenticated %}
+                  <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
+                  <li class="special">
+                    <a href="{% url 'favorites' %}">Favorites</a>
+                  </li>
+                  {% else %}
+                  <li class="special">
+                    <a href="{% url 'register' %}">Register</a>
+                  </li>
+                  <li class="special"><a href="{% url 'login' %}">Login</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </nav>
+            <div class="hero">
+              <h1>About</h1>
+            </div>
+          </header>
+
+      <main>
+      <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <p>
+            {% for item in breadcrumb %}
+                {% if not forloop.last %}
+                    <a href="{{ item.url }}">{{ item.title }}</a> >
+                {% else %}
+                    {{ item.title }}
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+
+        <!-- About Section -->
+        <section class="about-section">
+          <h1>About uniAPP</h1>
+          <p>
+            At the heart of every student's higher education journey is the
+            delicate decision-making process. Our platform serves as a guiding
+            light for students in Ghana, offering a centralized hub of
+            university and course information. With our unique geographic-based
+            recommender system and newly introduced academic background
+            matching, we align students with institutions and programs that
+            resonate with their personal strengths and aspirations. We are
+            dedicated to helping each student find their ideal path, making the
+            transition to higher education both thoughtful and inspired.
+          </p>
+        </section>
+
+        <!-- What We Offer Section -->
+        <section class="offer-section">
+          <h2>What We Offer</h2>
+          <ul>
+            <li>
+              <strong>Comprehensive University Database:</strong> A curated list
+              of universities in Ghana with detailed profiles including courses,
+              eligibility, and contact information.
+            </li>
+            <li>
+              <strong>Personalized Recommendations:</strong> A geographic-based
+              system that aligns students with universities that best fit their
+              location preferences.
+            </li>
+            <li>
+              <strong>Resourceful Guidance:</strong> Articles and guides to
+              navigate the higher education landscape, from selecting the right
+              course to understanding application processes.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Our Commitment Section -->
+        <section class="commitment-section">
+          <h2>Our Commitment</h2>
+          <p>
+            We are dedicated to upholding the privacy and security of our users,
+            ensuring their data is always protected. Our commitment extends to
+            providing a platform that remains a trustworthy source of current,
+            accurate information, consistently updated to reflect the latest
+            developments, and enhanced through active user engagement and
+            continuous improvements.
+          </p>
+        </section>
+
+        <!-- Scope of Service Section -->
+        <section class="scope-section">
+          <h2>Scope of Service</h2>
+          <p>
+            Our platform offers direct links to official university websites for
+            easy access to applications. However, our primary focus is on
+            providing detailed, accurate information and personalized
+            recommendations to guide students in making informed decisions. We
+            do not process applications directly, ensuring our services remain
+            centered on guidance and support.
+          </p>
+        </section>
+
+        <hr />
+
+        <!-- Impact Section -->
+        <section class="impact-section">
+          <div class="impact-content">
+            <div class="impact-text">
+              <h2>Our Impact</h2>
+              <p>
+                Our platform has guided over 10,000 students to secure their
+                future by connecting them with their perfect university fit.
+              </p>
+              <a href="#" class="cta-link">
+                <div class="cta-box">
+                  <i class="fa-solid fa-angle-right"></i>
+                </div>
+                <span class="cta-text">View Statistics</span>
+              </a>
+            </div>
+            <div class="impact-image">
+              <img src="{% static 'images/about1.png' %}" alt="Our Impact" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Invitation to Connect Section -->
+        <section class="invitation-section">
+          <div class="invitation-content">
+            <div class="invitation-image">
+              <img src="{% static 'images/about2.png' %}" alt="Invitation to Connect" />
+            </div>
+            <div class="invitation-text">
+              <h2>Invitation to Connect</h2>
+              <p>
+                Join our community and be the first to know about the latest
+                updates, insightful tips, and success stories.
+              </p>
+              <a href="#" class="cta-link">
+                <div class="cta-box">
+                  <i class="fa-solid fa-angle-right"></i>
+                </div>
+                <span class="cta-text">Join us here</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQs Section -->
+        <section class="faqs__section">
+          <h2>FAQs</h2>
+          <button class="accordion">How does the platform work?</button>
+          <div class="panel">
+            <p>
+              Sign up, set preferences, explore options, and connect directly
+              with universities — all in one seamless platform.
+            </p>
+          </div>
+
+          <button class="accordion">
+            How does the platform ensure data privacy?
+          </button>
+          <div class="panel">
+            <p>
+              We prioritize data protection and transparency. You have the right
+              to manage your information in your account settings.
+            </p>
+          </div>
+
+          <button class="accordion">
+            What support services does the platform offer?
+          </button>
+          <div class="panel">
+            <p>
+              Our support team is here to help you with any inquiries or issues
+              you may have.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="footer__section">
+        <div class="footer-container">
+          <div class="footer-section">
+            <div class="logo-sec">
+              <a href="#" class="footer-logo">uni<span>App</span></a>
+              <p>Start your tertiary education journey with ease.</p>
+            </div>
+            <div class="social-icons">
+              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+          </div>
+          <div class="footer-section section">
+            <h3>Features</h3>
+            <ul>
+              <li><a class="unlink" href="#">Advanced Search Filters</a></li>
+              <li>
+                <a class="unlink" href="#">Geo-Based Recommendations</a>
+              </li>
+              <li><a class="unlink" href="#">User Account Management</a></li>
+              <li>
+                <a class="unlink" href="#">Interactive User Interface</a>
+              </li>
+              <li><a class="unlink" href="#">Blog Posts</a></li>
+              <li><a class="unlink" href="#">Media News</a></li>
+              <li><a class="unlink" href="#">FAQs & Support</a></li>
+              <li><a class="unlink" href="#">Multilingual Support</a></li>
+              <li><a class="unlink" href="#">Data Security</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <div class="company">
+              <h3>Company</h3>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Mail Us</a></li>
+              </ul>
+            </div>
+
+            <div class="contact-us">
+              <h3>Contact Us</h3>
+              <ul>
+                <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
+                <li><a class="unlink" href="#">+233 544 72 6002</a></li>
+                <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
+                <li><a class="unlink" href="#">Accra, Ghana</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <div class="more-info">
+              <h3>More Info</h3>
+              <ul>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Platform Updates</a></li>
+                <li><a href="#">Community Engagement</a></li>
+              </ul>
+            </div>
+
+            <div class="help">
+              <h3>Help & Support</h3>
+              <ul>
+                <li><a href="#">Getting Started FAQs</a></li>
+                <li><a href="#">User Guide</a></li>
+                <li><a href="#">Technical Support</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
+          <p>All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+    <script src="{% static 'js/about.js' %}"></script>
+  </body>
+</html>
