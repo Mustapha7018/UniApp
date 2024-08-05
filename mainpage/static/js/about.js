@@ -13,3 +13,11 @@
       } 
     });
   }
+
+  // Hamburger menu
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('hamburger').addEventListener('click', function () {
+    const rightSide = document.getElementById('right-side');
+    rightSide.classList.toggle('active'); 
+  });
+});
