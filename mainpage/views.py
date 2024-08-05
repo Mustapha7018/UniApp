@@ -27,3 +27,16 @@ class AboutView(TemplateView):
         ]
         context["breadcrumb"] = breadcrumb
         return context
+
+
+class HowToApplyView(TemplateView):
+    template_name = "pages/how_to_apply.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        breadcrumb = [
+            {"title": "Home", "url": "/"},
+            {"title": "How to Apply", "url": "/how-to-apply/"},
+        ]
+        context["breadcrumb"] = breadcrumb
+        return context
