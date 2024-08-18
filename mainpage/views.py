@@ -44,3 +44,7 @@ class HowToApplyView(TemplateView):
 
 class UniPage(TemplateView):
     template_name = "pages/institution.html"
+
+
+class SearchPage(TemplateView):
+    template_name = "pages/search_page.html"

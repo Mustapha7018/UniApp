@@ -236,7 +236,7 @@ nav a.nav-special:hover {
 
 /* HERO SECTION */
 header .hero {
-  background-image: url("../images/ug_bg.png");
+  background-image: url("../images/search_img.png");
   background-repeat: no-repeat;
   background-size: cover;
   height: 40vh;
@@ -858,6 +858,14 @@ main {
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
   gap: 1.5rem;
+
+  a {
+    text-decoration: none;
+
+    h3 {
+        color: var(--black);
+    }
+  }
 }
 
 .uni-card {

@@ -7,4 +7,5 @@ urlpatterns = [
     path("about/", AboutView.as_view(), name="about"),
     path("how-to-apply/", HowToApplyView.as_view(), name="how-to-apply"),
     path("uni/", UniPage.as_view(), name="ug-site"),
+    path("search-page/", SearchPage.as_view(), name="search-page"),
 ]

@@ -23,8 +23,8 @@
               </div>
               <div class="right-side" id="right-side">
                 <ul class="nav-links">
-                  <li><a class="nav-special" href="#">Applicants</a></li>
-                  <li><a class="nav-special" href="#">Resources</a></li>
+                  <li><a class="nav-special" href="{% url 'how-to-apply' %}">Resources</a></li>
+                  <li><a class="nav-special" href="{% url 'search-page' %}">Institutions</a></li>
                   <li><a class="nav-special" href="#">About</a></li>
                   {% if user.is_authenticated %}
                   <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
