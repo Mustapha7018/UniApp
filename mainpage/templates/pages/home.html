@@ -142,7 +142,11 @@
     </div>
     {% endfor %}
   </div>
-  <a href="{% pageurl blog_index_page %}"><button>Read More</button></a>
+  {% if blog_index_page %}
+    <a href="{% pageurl blog_index_page %}">View Blog</a>
+  {% else %}
+      <p>Blog page not available</p>
+  {% endif %}
 </section>
 
 <section class="social__proof__section">

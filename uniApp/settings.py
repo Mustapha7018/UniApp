@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config(
     "SECRET_KEY", default="f3-o6i#=27k*5^b6uotf5idbwbg#is)q*o8fd2nuza*5kxex8^"
 )
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = config("DEBUG", default=True, cast=bool)
 
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "blogs",
 ]
 
-# SITE_ID = 1
+SITE_ID = 1
 
 # AUTHENTICATION_BACKENDS = (
 #     'django.contrib.auth.backends.ModelBackend',
