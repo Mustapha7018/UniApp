@@ -21,3 +21,4 @@ document.addEventListener('DOMContentLoaded', function () {
     rightSide.classList.toggle('active'); 
   });
 });
+

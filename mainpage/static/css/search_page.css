@@ -295,6 +295,7 @@ header .hero {
 header .hero h1 {
   font-size: 4rem;
   font-weight: 500;
+  margin-top: -5rem;
 }
 
 /* RESPONSIVE HERO SECTION */
@@ -772,45 +773,108 @@ main {
 
 
 /* Search and Filter Section */
-.search-filter-section {
-  margin: 2rem 0;
-  display: flex;
-  flex-direction: column;
-}
 
 .search-bar {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 60%;
+  left: -6%;
+  right: 0;
 }
 
-.search-bar input {
-  flex: 1;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid var(--gray-2);
-}
-
-.search-bar select {
-  padding: 0.75rem 10rem 0.75rem 1rem;
-  font-size: 1rem;
-  border: 1px solid var(--gray-2);
-  border-left: none;
-  border-radius: 0;
-}
-
-.search-bar .search-button {
-  background-color: var(--primary);
+#search {
+  max-width: 850px;
+  width: 100%;
+  height: 75px;
+  padding: 20px;
   border: none;
-  padding: 0.75rem 1.5rem;
-  color: var(--white);
-  font-size: 1rem;
+  font-size: 18px;
+  color: #333;
+  outline: none;
+  box-shadow: -4px 4px 9px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown {
+  position: relative;
+  height: 75px;
+  width: 250px;
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+}
+
+.dropbtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 75px;
+  padding: 0 15px;
+  width: 250px;
+  border: none;
+  background-color: #fff;
+  font-size: 18px;
+  color: #333;
   cursor: pointer;
 }
 
-.search-bar .search-button i {
-  font-size: 1.2rem;
+.dropbtn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background-color: var(--gray-3);
 }
+
+.fa-chevron-down {
+  right: 20%;
+  position: absolute;
+  color: var(--gray-1);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  background-color: #f1f1f1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.search-btn {
+  height: 75px;
+  width: 80px;
+  border: none;
+  box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.1);
+  background-color: var(--secondary);
+  font-size: 1.8rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search-btn:hover,
+.search-btn:focus {
+  background-color: #2980b9;
+}
+
 
 .filter-sort-section {
   display: flex;
@@ -834,6 +898,16 @@ main {
 
 .filter-list li {
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-list select {
+  padding: 0.4rem;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: 1px solid var(--gray-2);
 }
 
 .sort-options {
@@ -893,25 +967,32 @@ main {
   position: absolute;
   top: 10px;
   right: 10px;
-  display: none;
   padding: 0.5rem;
   border-radius: 50%;
 }
 
+.favorite-checkbox, .favorite-icon i {
+  display: none;
+}
+
 .favorite-icon i {
-  color: var(--white);
+  color: var(--white); 
   font-size: 1.5rem;
 }
 
-.uni-card:hover .favorite-icon {
-  display: block;
+.favorite-checkbox:checked + i {
+  color: red; 
 }
+
+.uni-card:hover .favorite-icon i {
+  display: block;
+  cursor: pointer;
+}
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
-.search-bar {
-    flex-direction: column;
-}
 
 .filter-sort-section {
     flex-direction: column;
@@ -953,9 +1034,9 @@ main {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .search-bar {
+  /* .search-bar {
       flex-direction: column;
-  }
+  } */
 
   .filter-sort-section {
       flex-direction: column;
@@ -1029,4 +1110,37 @@ main {
       max-width: 100%;
   }
 }
+
+/* Page Vote Section */
+
+.page__vote__section {
+  margin: 0 10rem;
+
+  p {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.page__vote__section .buttons {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.page__vote__section .buttons button {
+  width: 200px;
+  height: 45px;
+  margin-right: 1rem;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid var(--primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page__vote__section .buttons button:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+
+
 
