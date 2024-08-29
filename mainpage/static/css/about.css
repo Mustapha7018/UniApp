@@ -325,6 +325,12 @@ main {
 
 .breadcrumb p {
   margin-left: 1.2rem;
+  margin-bottom: 2rem;
+
+  a {
+    text-decoration: none;
+    color: var(--gray-1);
+  }
 }
 
 /* About Page CSS */
@@ -362,12 +368,26 @@ main {
 }
 
 .offer-section ul {
-  padding-left: 1rem;
+  list-style-type: none; 
+  padding-left: 1rem; 
 }
 
 .offer-section ul li {
-  margin-bottom: 1.2rem;
+  position: relative;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
 }
+
+.offer-section ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 7px;
+  height: 7px; 
+  background-color: var(--primary); 
+}
+
 
 hr {
   border: 0;

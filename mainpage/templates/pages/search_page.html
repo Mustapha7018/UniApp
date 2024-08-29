@@ -62,10 +62,18 @@
 
     <main>
       <!-- Breadcrumb -->
-      <!-- <div class="breadcrumb">
-                <p><a href="/">Home</a> > Institutions</p>
-            </div>
-         -->
+      <div class="breadcrumb">
+        <p>
+            {% for item in breadcrumb %}
+                {% if not forloop.last %}
+                    <a href="{{ item.url }}">{{ item.title }}</a> >
+                {% else %}
+                    {{ item.title }}
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+        
       <!-- Search and Filters -->
       <section class="search-filter-section">
         <div class="filter-sort-section">

@@ -375,6 +375,12 @@ main {
 
 .breadcrumb p {
   margin-left: 1.2rem;
+  margin-bottom: 2rem;
+
+  a {
+    text-decoration: none;
+    color: var(--gray-1);
+  }
 }
 
 /* About Section */
@@ -1118,6 +1124,7 @@ main {
 
   p {
     margin-bottom: 1.5rem;
+    font-weight: 700;
   }
 }
 
@@ -1132,7 +1139,7 @@ main {
   margin-right: 1rem;
   user-select: none;
   cursor: pointer;
-  border: 1px solid var(--primary);
+  border: 2px solid var(--primary);
   transition: background-color 0.3s, color 0.3s;
 }
 

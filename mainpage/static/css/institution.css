@@ -374,6 +374,12 @@ main {
 
 .breadcrumb p {
   margin-left: 1.2rem;
+  margin-bottom: 2rem;
+
+  a {
+    text-decoration: none;
+    color: var(--gray-1);
+  }
 }
 
 /* About Section */
