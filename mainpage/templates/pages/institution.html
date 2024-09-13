@@ -1,251 +1,272 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University of Ghana</title>
-    <link rel="stylesheet" href="{% static 'css/institution.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University of Ghana</title>
+  <link rel="stylesheet" href="{% static 'css/institution.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
-    <div class="main-container">
+  <div class="main-container">
     <!-- Header -->
-      <header>
-        <nav class="navbar">
-          <div class="left-side">
-            <a href="/" class="nav-logo">uni<span>App</span></a>
-          </div>
-          <div class="hamburger" id="hamburger">
-            <i class="fa fa-bars" id="bars-icon"></i>
-          </div>
-          <div class="right-side" id="right-side">
-            <ul class="nav-links">
-              <li><a class="nav-special" href="{% url 'how-to-apply' %}">Resources</a></li>
-              <li><a class="nav-special" href="#">Resources</a></li>
-              <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
-              {% if user.is_authenticated %}
-              <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
-              <li class="special">
-                <a href="{% url 'favorites' %}">Favorites</a>
-              </li>
-              {% else %}
-              <li class="special">
-                <a href="{% url 'register' %}">Register</a>
-              </li>
-              <li class="special"><a href="{% url 'login' %}">Login</a></li>
-              {% endif %}
-            </ul>
-          </div>
-        </nav>
-        <div class="hero">
-            <h1>University of Ghana</h1>
-            <div class="cta-buttons">
-                <a href="#" class="cta-btn cta-btn-alt">
-                    Graduate
-                    <i class="fa-solid fa-up-right-from-square"></i>
-                </a>
-                <a href="#" class="cta-btn">
-                    Undergraduate
-                    <i class="fa-solid fa-up-right-from-square"></i>
-                </a>
-            </div>
-            
+    <header>
+      <nav class="navbar">
+        <div class="left-side">
+          <a href="/" class="nav-logo">uni<span>App</span></a>
         </div>
-      </header>
-
-        <main>
-        <!-- Breadcrumb -->
-        <div class="breadcrumb">
-            <p>
-                {% for item in breadcrumb %}
-                    {% if not forloop.last %}
-                        <a href="{{ item.url }}">{{ item.title }}</a> >
-                    {% else %}
-                        {{ item.title }}
-                    {% endif %}
-                {% endfor %}
-            </p>
+        <div class="hamburger" id="hamburger">
+          <i class="fa fa-bars" id="bars-icon"></i>
+        </div>
+        <div class="right-side" id="right-side">
+          <ul class="nav-links">
+            <li><a class="nav-special" href="{% url 'how-to-apply' %}">Resources</a></li>
+            <li><a class="nav-special" href="#">Resources</a></li>
+            <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
+            {% if user.is_authenticated %}
+            <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
+            <li class="special">
+              <a href="{% url 'favorites' %}">Favorites</a>
+            </li>
+            {% else %}
+            <li class="special">
+              <a href="{% url 'register' %}">Register</a>
+            </li>
+            <li class="special"><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+      <div class="hero">
+        <h1>University of Ghana</h1>
+        <div class="cta-buttons">
+          <a href="#" class="cta-btn cta-btn-alt">
+            Graduate
+            <i class="fa-solid fa-up-right-from-square"></i>
+          </a>
+          <a href="#" class="cta-btn">
+            Undergraduate
+            <i class="fa-solid fa-up-right-from-square"></i>
+          </a>
         </div>
 
-            <!-- About Section -->
-            <section class="about-section">
-                <div class="about-header">
-                    <h1>About UG</h1>
-                    <img src="{% static 'images/ug_logo.png' %}" alt="University of Ghana Logo" class="uni-logo">
-                </div>
-                <p>
-                    The <a href="#">University of Ghana</a> is a public university located in Accra, Ghana. It holds the distinction of being the oldest public university in the country. The university was established in 1948 as the University College of the Gold Coast, an affiliate college of the University of London, which supervised its academic programs and awarded degrees.
-                </p>
-                <p>
-                    Located on the west side of the Accra Legon Hills and northeast of the center of Accra, the University of Ghana has over 60,000 registered students. It originally focused on liberal arts, social sciences, law, basic science, agriculture, and medicine. However, the curriculum has expanded to include more technology-based and vocational courses as well as postgraduate training.
-                </p>
-                <p>
-                    The University of Ghana provides an extensive selection of courses across multiple fields of study. These encompass:
-                </p>
-                <ul>
-                    <li>Arts</li>
-                    <li>Sciences</li>
-                    <li>Business</li>
-                    <li>Law</li>
-                    <li>Engineering</li>
-                    <li>Social Sciences</li>
-                    <li>Health Sciences</li>
-                </ul>
-                <p>
-                    Additionally, the university offers a variety of advanced programs, including master’s and doctoral degrees in diverse areas.
-                </p>
-            </section>
+      </div>
+    </header>
 
-            <!-- General Entry Requirements -->
-            <section class="entry-requirements">
-                <h2>General entry requirements</h2>
-                <ol>
-                    <li>WASSCE Holders: Must have credit passes in six subjects, including English, Mathematics, and three electives relevant to the chosen program.</li>
-                    <li>GCE A-Level Holders: Need passes in three subjects, one at least at Grade D or better, plus credit passes in five O-Level subjects including English and Mathematics.</li>
-                    <li>International Baccalaureate (IB) Holders: Require a minimum of 24 points with core and elective subjects.</li>
-                    <li>American High School Grade 12 Holders: Should have a final GPA of at least 3.0.</li>
-                    <li>Applicants with Other Qualifications: Considered on a case-by-case basis.</li>
-                    <li>Mature Students: Assessed based on age, experience, and performance in an entrance exam and/or interview.</li>
-                    <li>Postgraduate Applicants: Generally need a good first degree, at least a second-class lower division.</li>
-                </ol>
-            </section>
+    <main>
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <p>
+          {% for item in breadcrumb %}
+          {% if not forloop.last %}
+          <a href="{{ item.url }}">{{ item.title }}</a> >
+          {% else %}
+          {{ item.title }}
+          {% endif %}
+          {% endfor %}
+        </p>
+      </div>
 
-            <!-- Location Section -->
-            <section class="location-section">
-                <h2>Location</h2>
-                <p>
-                    University of Ghana<br>
-                    Legon Boundary, Accra, Ghana<br>
-                    P.O. Box LG 25, Legon, Accra, Ghana
-                </p>
-                <p>Website: <a href="https://www.ug.edu.gh">https://www.ug.edu.gh</a></p>
-                <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                </div>
-                <div class="map">
-                    <iframe src="https://maps.google.com/maps?q=University%20of%20Ghana&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
-                </div>
-            </section>
+      <!-- About Section -->
+      <section class="about-section">
+        <div class="about-header">
+          <h2>About UG</h2>
+          <img src="{% static 'images/ug_logo.png' %}" alt="University of Ghana Logo" class="uni-logo">
+        </div>
+        <p>
+          The <a href="#">University of Ghana</a> is a public university located in Accra, Ghana. It holds the
+          distinction of being the oldest public university in the country. The university was established in 1948 as
+          the University College of the Gold Coast, an affiliate college of the University of London, which supervised
+          its academic programs and awarded degrees.
+        </p>
+        <p>
+          Located on the west side of the Accra Legon Hills and northeast of the center of Accra, the University of
+          Ghana has over 60,000 registered students. It originally focused on liberal arts, social sciences, law, basic
+          science, agriculture, and medicine. However, the curriculum has expanded to include more technology-based and
+          vocational courses as well as postgraduate training.
+        </p>
+      </section>
 
-             <!-- Resources Section -->
-        <section class="faqs__section">
-            <h2>Resources</h2>
-            <button class="accordion">How does the platform work?</button>
-            <div class="panel">
-              <p>
-                Sign up, set preferences, explore options, and connect directly
-                with universities — all in one seamless platform.
-              </p>
-            </div>
-  
-            <button class="accordion">
-              How does the platform ensure data privacy?
-            </button>
-            <div class="panel">
-              <p>
-                We prioritize data protection and transparency. You have the right
-                to manage your information in your account settings.
-              </p>
-            </div>
-  
-            <button class="accordion">
-              Useful Links
-            </button>
-            <div class="panel">
-              <p>
-                These are some useful links to other websites
-              </p>
-            </div>
-          </section>
-        </main>
+      <!-- Academic programmes -->
+      <section class="academic-programes">
+        <h2>Academic programs</h2>
+        <p>
+          The University of Ghana provides an extensive selection of courses across multiple fields of study. These
+          encompass:
+        </p>
+        <ul>
+          <li>Arts</li>
+          <li>Sciences</li>
+          <li>Business</li>
+          <li>Law</li>
+          <li>Engineering</li>
+          <li>Social Sciences</li>
+          <li>Health Sciences</li>
+        </ul>
+        <p>
+          Additionally, the university offers a variety of advanced programs, including master’s and doctoral degrees in
+          diverse areas.
+        </p>
+      </section>
 
-         <!-- FOOTER -->
-      <footer class="footer__section">
-        <div class="footer-container">
-          <div class="footer-section">
-            <div class="logo-sec">
-              <a href="#" class="footer-logo">uni<span>App</span></a>
-              <p>Start your tertiary education journey with ease.</p>
-            </div>
-            <div class="social-icons">
-              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="#"><i class="fa-brands fa-instagram"></i></a>
-              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-              <a href="#"><i class="fa-regular fa-envelope"></i></a>
-            </div>
+      <!-- General Entry Requirements -->
+      <section class="entry-requirements">
+        <h2>General entry requirements</h2>
+        <ol>
+          <li>WASSCE Holders: Must have credit passes in six subjects, including English, Mathematics, and three
+            electives relevant to the chosen program.</li>
+          <li>GCE A-Level Holders: Need passes in three subjects, one at least at Grade D or better, plus credit passes
+            in five O-Level subjects including English and Mathematics.</li>
+          <li>International Baccalaureate (IB) Holders: Require a minimum of 24 points with core and elective subjects.
+          </li>
+          <li>American High School Grade 12 Holders: Should have a final GPA of at least 3.0.</li>
+          <li>Applicants with Other Qualifications: Considered on a case-by-case basis.</li>
+          <li>Mature Students: Assessed based on age, experience, and performance in an entrance exam and/or interview.
+          </li>
+          <li>Postgraduate Applicants: Generally need a good first degree, at least a second-class lower division.</li>
+        </ol>
+      </section>
+
+      <!-- Location Section -->
+      <section class="location-section">
+        <h2>Address</h2>
+        <p>
+          University of Ghana<br>
+          Legon Boundary, Accra, Ghana<br>
+          P.O. Box LG 25, Legon, Accra, Ghana
+        </p>
+        <p>Website: <a href="https://www.ug.edu.gh">https://www.ug.edu.gh</a></p>
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+        <div class="map">
+          <iframe
+            src="https://maps.google.com/maps?q=University%20of%20Ghana&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe>
+        </div>
+      </section>
+
+      <!-- Resources Section -->
+      <section class="faqs__section">
+        <h2>Resources</h2>
+        <button class="accordion">Additional information</button>
+        <div class="panel">
+          <p>
+            Sign up, set preferences, explore options, and connect directly
+            with universities — all in one seamless platform.
+          </p>
+        </div>
+
+        <button class="accordion">
+          Discover
+        </button>
+        <div class="panel">
+          <p>
+            We prioritize data protection and transparency. You have the right
+            to manage your information in your account settings.
+          </p>
+        </div>
+
+        <button class="accordion">
+          Useful Links
+        </button>
+        <div class="panel">
+          <p>
+            These are some useful links to other websites
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer__section">
+      <div class="footer-container">
+        <div class="footer-section">
+          <div class="logo-sec">
+            <a href="#" class="footer-logo">uni<span>App</span></a>
+            <p>Start your tertiary education journey with ease.</p>
           </div>
-          <div class="footer-section section">
-            <h3>Features</h3>
+          <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-regular fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-section section">
+          <h3>Features</h3>
+          <ul>
+            <li><a class="unlink" href="#">Advanced Search Filters</a></li>
+            <li>
+              <a class="unlink" href="#">Geo-Based Recommendations</a>
+            </li>
+            <li><a class="unlink" href="#">User Account Management</a></li>
+            <li>
+              <a class="unlink" href="#">Interactive User Interface</a>
+            </li>
+            <li><a class="unlink" href="#">Blog Posts</a></li>
+            <li><a class="unlink" href="#">Media News</a></li>
+            <li><a class="unlink" href="#">FAQs & Support</a></li>
+            <li><a class="unlink" href="#">Multilingual Support</a></li>
+            <li><a class="unlink" href="#">Data Security</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <div class="company">
+            <h3>Company</h3>
             <ul>
-              <li><a class="unlink" href="#">Advanced Search Filters</a></li>
-              <li>
-                <a class="unlink" href="#">Geo-Based Recommendations</a>
-              </li>
-              <li><a class="unlink" href="#">User Account Management</a></li>
-              <li>
-                <a class="unlink" href="#">Interactive User Interface</a>
-              </li>
-              <li><a class="unlink" href="#">Blog Posts</a></li>
-              <li><a class="unlink" href="#">Media News</a></li>
-              <li><a class="unlink" href="#">FAQs & Support</a></li>
-              <li><a class="unlink" href="#">Multilingual Support</a></li>
-              <li><a class="unlink" href="#">Data Security</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Mail Us</a></li>
             </ul>
           </div>
 
-          <div class="footer-section">
-            <div class="company">
-              <h3>Company</h3>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Mail Us</a></li>
-              </ul>
-            </div>
-
-            <div class="contact-us">
-              <h3>Contact Us</h3>
-              <ul>
-                <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
-                <li><a class="unlink" href="#">+233 544 72 6002</a></li>
-                <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
-                <li><a class="unlink" href="#">Accra, Ghana</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="footer-section">
-            <div class="more-info">
-              <h3>More Info</h3>
-              <ul>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Platform Updates</a></li>
-                <li><a href="#">Community Engagement</a></li>
-              </ul>
-            </div>
-
-            <div class="help">
-              <h3>Help & Support</h3>
-              <ul>
-                <li><a href="#">Getting Started FAQs</a></li>
-                <li><a href="#">User Guide</a></li>
-                <li><a href="#">Technical Support</a></li>
-                <li><a href="#">Contact Us</a></li>
-              </ul>
-            </div>
+          <div class="contact-us">
+            <h3>Contact Us</h3>
+            <ul>
+              <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
+              <li><a class="unlink" href="#">+233 544 72 6002</a></li>
+              <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
+              <li><a class="unlink" href="#">Accra, Ghana</a></li>
+            </ul>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
-          <p>All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
 
-    <script src="{% static 'js/about.js' %}"></script>
+        <div class="footer-section">
+          <div class="more-info">
+            <h3>More Info</h3>
+            <ul>
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Platform Updates</a></li>
+              <li><a href="#">Community Engagement</a></li>
+            </ul>
+          </div>
+
+          <div class="help">
+            <h3>Help & Support</h3>
+            <ul>
+              <li><a href="#">Getting Started FAQs</a></li>
+              <li><a href="#">User Guide</a></li>
+              <li><a href="#">Technical Support</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
+        <p>All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{% static 'js/about.js' %}"></script>
 </body>
+
 </html>
