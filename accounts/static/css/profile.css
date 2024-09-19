@@ -189,7 +189,7 @@ header .hero {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid var(--white);
+    /* border: 3px solid var(--white); */
   }
 }
 

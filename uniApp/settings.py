@@ -1,5 +1,7 @@
 import os
-from decouple import config # type: ignore
+from decouple import config
+import ssl
+import certifi
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -7,6 +9,8 @@ SECRET_KEY = config(
     "SECRET_KEY", default="f3-o6i#=27k*5^b6uotf5idbwbg#is)q*o8fd2nuza*5kxex8^"
 )
 DEBUG = config("DEBUG", default=True, cast=bool)
+
+ssl._create_default_https_context = ssl.create_default_context(cafile=certifi.where())
 
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
