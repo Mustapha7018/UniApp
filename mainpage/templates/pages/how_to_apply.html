@@ -49,17 +49,21 @@
       <main>
         <!-- Breadcrumb -->
         <div class="breadcrumb">
-            <p>
-                {% for item in breadcrumb %}
-                    {% if not forloop.last %}
-                        <a href="{{ item.url }}">{{ item.title }}</a> >
-                    {% else %}
-                        {{ item.title }}
-                    {% endif %}
-                {% endfor %}
-            </p>
+          <p>
+            {% for item in breadcrumb %}
+            {% if forloop.first %}
+            <a href="{% url 'home' %}">{{ item.title }}</a>
+            {% elif forloop.last %}
+            <span>{{ item.title }}</span>
+            {% else %}
+            <a href="{{ item.url }}">{{ item.title }}</a>
+            {% endif %}
+            {% if not forloop.last %}
+            <span>&gt;</span>
+            {% endif %}
+            {% endfor %}
+          </p>
         </div>
-
         <!-- How to Apply Introduction -->
         <section class="apply-intro">
           <h1>How to Apply</h1>

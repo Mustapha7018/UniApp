@@ -64,16 +64,21 @@
       <!-- Breadcrumb -->
       <div class="breadcrumb">
         <p>
-            {% for item in breadcrumb %}
-                {% if not forloop.last %}
-                    <a href="{{ item.url }}">{{ item.title }}</a> >
-                {% else %}
-                    {{ item.title }}
-                {% endif %}
-            {% endfor %}
+          {% for item in breadcrumb %}
+          {% if forloop.first %}
+          <a href="{% url 'home' %}">{{ item.title }}</a>
+          {% elif forloop.last %}
+          <span>{{ item.title }}</span>
+          {% else %}
+          <a href="{{ item.url }}">{{ item.title }}</a>
+          {% endif %}
+          {% if not forloop.last %}
+          <span>&gt;</span>
+          {% endif %}
+          {% endfor %}
         </p>
-    </div>
-        
+      </div>
+
       <!-- Search and Filters -->
       <section class="search-filter-section">
         <div class="filter-sort-section">

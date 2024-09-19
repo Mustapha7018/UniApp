@@ -57,18 +57,24 @@
     </header>
 
     <main>
-      <!-- Breadcrumb -->
       <div class="breadcrumb">
         <p>
           {% for item in breadcrumb %}
-          {% if not forloop.last %}
-          <a href="{{ item.url }}">{{ item.title }}</a> >
+          {% if forloop.first %}
+          <a href="{% url 'home' %}">{{ item.title }}</a>
+          {% elif forloop.last %}
+          <span>{{ item.title }}</span>
           {% else %}
-          {{ item.title }}
+          <a href="{{ item.url }}">{{ item.title }}</a>
+          {% endif %}
+          {% if not forloop.last %}
+          <span>&gt;</span>
           {% endif %}
           {% endfor %}
         </p>
       </div>
+
+
 
       <!-- About Section -->
       <section class="about-section">
@@ -142,7 +148,7 @@
         <div class="social-icons">
           <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
           <a href="#"><i class="fa-brands fa-linkedin"></i></a>
         </div>
         <div class="map">
