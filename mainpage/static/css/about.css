@@ -2,7 +2,7 @@
 
 :root {
   /* COLORS */
-  --background: #D9D9D9;
+  --background: #F3F3F3;
   --primary: rgba(109, 0, 39, 0.9);
   --secondary: rgba(0, 78, 152, 0.9);
   --black: black;
@@ -392,7 +392,7 @@ main {
 hr {
   border: 0;
   height: 1px;
-  background: var(--background);
+  background: var(--gray-2);
   margin: 10rem auto;
   width: 50%;
 }

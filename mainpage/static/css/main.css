@@ -2,7 +2,7 @@
 
 :root {
   /* COLORS */
-  --background: #D9D9D9;
+  --background: #F3F3F3;
   --primary: rgba(109, 0, 39, 0.9);
   --secondary: rgba(0, 78, 152, 0.9);
   --black: black;
@@ -334,14 +334,16 @@ header .hero p {
   font-size: 18px;
   color: #333;
   outline: none;
-  box-shadow: -2px 4px 9px rgba(0, 0, 0, 0.233);
+  box-shadow: -4px 4px 9px rgba(0, 0, 0, 0.1);
+
 }
 
 .dropdown {
   position: relative;
   height: 75px;
   width: 250px;
-  box-shadow: -2px 4px 9px rgba(0, 0, 0, 0.233);
+  box-shadow: -4px 4px 9px rgba(0, 0, 0, 0.1);
+
 }
 
 .dropbtn {
@@ -404,7 +406,7 @@ header .hero p {
   height: 75px;
   width: 80px;
   border: none;
-  box-shadow: 4px 5px 9px rgba(0, 0, 0, 0.233);
+  box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.1);
   background-color: var(--secondary);
   font-size: 1.8rem;
   color: #fff;
@@ -507,7 +509,7 @@ header .hero p {
   flex-wrap: wrap;
   position: relative;
   list-style: none;
-  background-color: var(--background);
+  background-color: var(--gray-2);
 }
 
 .tab {
@@ -515,17 +517,17 @@ header .hero p {
 }
 
 .tab:checked + label {
-  background-color: var(--background);
+  background-color: var(--gray-2);
   color: var(--black);
   cursor: default;
 }
 
 .tab:checked + label:hover {
-  background-color: #D6D6D6;
+  background-color: var(--gray-2);
 }
 
 .tab + label {
-  box-shadow: 0 -1px 0 var(--background) inset;
+  box-shadow: 0 -1px 0 #EEE inset;
   cursor: pointer;
   display: block;
   text-decoration: none;
@@ -598,7 +600,7 @@ header .hero p {
 
 .toggle-grid .grid {
   position: relative;
-  background-color: var(--background);
+  background-color: var(--gray-2);
   transition: background-color 0.3s;
   display: flex;
   flex-direction: column;
@@ -624,7 +626,7 @@ header .hero p {
 }
 
 .toggle-grid .grid:hover {
-  background-color: #D6D6D6;
+  background-color: #e5e5e5;
 }
 
 .toggle-grid .grid:nth-child(3n) {
@@ -638,7 +640,7 @@ header .hero p {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: var(--background);
+  background-color: var(--gray-3);
 }
 
 .toggle-grid .grid:not(:nth-last-child(-n + 3))::after {
@@ -648,7 +650,7 @@ header .hero p {
   left: 0;
   right: 0;
   height: 1px;
-  background-color: var(--background);
+  background-color: var(--gray-3);
 }
 
 /* Responsive styles for 1250px viewport */
@@ -755,7 +757,7 @@ header .hero p {
   margin-top: 250px;
   display: grid;
   place-items: center;
-  background-color: rgba(0, 79, 152, 0.219);
+  background-color: rgba(0, 78, 152, 0.15);;
 }
 
 .row {
