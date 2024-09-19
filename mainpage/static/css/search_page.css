@@ -1124,7 +1124,7 @@ main {
 /* Page Vote Section */
 
 .page__vote__section {
-  margin: 0 10rem;
+  margin: 0;
 
   p {
     margin-bottom: 1.5rem;

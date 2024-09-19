@@ -1,289 +1,300 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>How to Apply</title>
-    <link rel="stylesheet" href="{% static 'css/how_to_apply.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-  </head>
-  <body>
-    <div class="main-container">
-      <!-- Header -->
-      <header>
-        <nav class="navbar">
-          <div class="left-side">
-            <a href="/" class="nav-logo">uni<span>App</span></a>
-          </div>
-          <div class="hamburger" id="hamburger">
-            <i class="fa fa-bars" id="bars-icon"></i>
-          </div>
-          <div class="right-side" id="right-side">
-            <ul class="nav-links">
-              <li><a class="nav-special" href="{% url 'how-to-apply' %}">Resources</a></li>
-              <li><a class="nav-special" href="{% url 'search-page' %}">Institutions</a></li>
-              <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
-              {% if user.is_authenticated %}
-              <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
-              <li class="special">
-                <a href="{% url 'favorites' %}">Favorites</a>
-              </li>
-              {% else %}
-              <li class="special">
-                <a href="{% url 'register' %}">Register</a>
-              </li>
-              <li class="special"><a href="{% url 'login' %}">Login</a></li>
-              {% endif %}
-            </ul>
-          </div>
-        </nav>
-        <div class="hero">
-          <h1>How to Apply</h1>
-        </div>
-      </header>
 
-      <main>
-        <!-- Breadcrumb -->
-        <div class="breadcrumb">
-          <p>
-            {% for item in breadcrumb %}
-            {% if forloop.first %}
-            <a href="{% url 'home' %}">{{ item.title }}</a>
-            {% elif forloop.last %}
-            <span>{{ item.title }}</span>
-            {% else %}
-            <a href="{{ item.url }}">{{ item.title }}</a>
-            {% endif %}
-            {% if not forloop.last %}
-            <span>&gt;</span>
-            {% endif %}
-            {% endfor %}
-          </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Apply</title>
+  <link rel="stylesheet" href="{% static 'css/how_to_apply.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <div class="main-container">
+    <!-- Header -->
+    <header>
+      <nav class="navbar">
+        <div class="left-side">
+          <a href="/" class="nav-logo">uni<span>App</span></a>
         </div>
-        <!-- How to Apply Introduction -->
-        <section class="apply-intro">
-          <h1>How to Apply</h1>
+        <div class="hamburger" id="hamburger">
+          <i class="fa fa-bars" id="bars-icon"></i>
+        </div>
+        <div class="right-side" id="right-side">
+          <ul class="nav-links">
+            <li><a class="nav-special" href="{% url 'how-to-apply' %}">Resources</a></li>
+            <li><a class="nav-special" href="{% url 'search-page' %}">Institutions</a></li>
+            <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
+            {% if user.is_authenticated %}
+            <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
+            <li class="special">
+              <a href="{% url 'favorites' %}">Favorites</a>
+            </li>
+            {% else %}
+            <li class="special">
+              <a href="{% url 'register' %}">Register</a>
+            </li>
+            <li class="special"><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+      <div class="hero">
+        <h1>How to Apply</h1>
+      </div>
+    </header>
+
+    <main>
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <p>
+          {% for item in breadcrumb %}
+          {% if forloop.first %}
+          <a href="{% url 'home' %}">{{ item.title }}</a>
+          {% elif forloop.last %}
+          <span>{{ item.title }}</span>
+          {% else %}
+          <a href="{{ item.url }}">{{ item.title }}</a>
+          {% endif %}
+          {% if not forloop.last %}
+          <span>&gt;</span>
+          {% endif %}
+          {% endfor %}
+        </p>
+      </div>
+      <!-- How to Apply Introduction -->
+      <section class="apply-intro">
+        <h1>How to Apply</h1>
+        <p>
+          Navigating the university application process can seem daunting, but
+          it doesn't have to be. Our platform streamlines this journey,
+          offering you a straightforward path from exploration to application.
+        </p>
+        <p>
+          Here, you can browse through universities, explore various courses,
+          and get a comprehensive view of each institution. Once you've found
+          your match, we make it easy to take the next step: a
+          <span class="highlight">direct</span> link to the university's
+          official website is provided for you to apply.
+        </p>
+        <p>
+          Follow our simple guide to embark on your academic journey with
+          confidence.
+        </p>
+      </section>
+
+      <!-- Step by Step Guide -->
+      <section class="step-guide">
+        <div class="step-header">
+          <h2>Step by Step Guide</h2>
           <p>
-            Navigating the university application process can seem daunting, but
-            it doesn't have to be. Our platform streamlines this journey,
-            offering you a straightforward path from exploration to application.
-          </p>
-          <p>
-            Here, you can browse through universities, explore various courses,
-            and get a comprehensive view of each institution. Once you've found
-            your match, we make it easy to take the next step: a
-            <span class="highlight">direct</span> link to the university's
-            official website is provided for you to apply.
-          </p>
-          <p>
-            Follow our simple guide to embark on your academic journey with
+            Follow these simple steps to start your journey with ease and
             confidence.
           </p>
-        </section>
-
-        <!-- Step by Step Guide -->
-        <section class="step-guide">
-          <div class="step-header">
-            <h2>Step by Step Guide</h2>
+        </div>
+        <div class="step-container">
+          <div class="step">
+            <h3>01</h3>
+            <h4>Create Your Profile</h4>
             <p>
-              Follow these simple steps to start your journey with ease and
-              confidence.
+              Begin by setting up your profile with your academic interests
+              and location preferences. This will enable us to provide
+              personalized university recommendations.
             </p>
           </div>
-          <div class="step-container">
-            <div class="step">
-              <h3>01</h3>
-              <h4>Create Your Profile</h4>
-              <p>
-                Begin by setting up your profile with your academic interests
-                and location preferences. This will enable us to provide
-                personalized university recommendations.
-              </p>
-            </div>
-            <div class="step">
-              <h3>02</h3>
-              <h4>Browse and Explore</h4>
-              <p>
-                Use our search tools to discover universities and courses that
-                align with your interests. Delve into detailed profiles for
-                insights into campus life, academic programs, and admission
-                requirements.
-              </p>
-            </div>
-            <div class="step">
-              <h3>03</h3>
-              <h4>Review and Decide</h4>
-              <p>
-                After exploring your options, review your favorite universities
-                and courses. Use the information and recommendations to make an
-                informed decision about your higher education journey.
-              </p>
-            </div>
+          <div class="step">
+            <h3>02</h3>
+            <h4>Browse and Explore</h4>
+            <p>
+              Use our search tools to discover universities and courses that
+              align with your interests. Delve into detailed profiles for
+              insights into campus life, academic programs, and admission
+              requirements.
+            </p>
           </div>
-        </section>
+          <div class="step">
+            <h3>03</h3>
+            <h4>Review and Decide</h4>
+            <p>
+              After exploring your options, review your favorite universities
+              and courses. Use the information and recommendations to make an
+              informed decision about your higher education journey.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- Call to Action -->
-        <section class="cta-section">
-          <h2>Ready to embark on your academic journey?</h2>
+      <!-- Call to Action -->
+      <section class="cta-section">
+        <h2>Ready to embark on your academic journey?</h2>
+        <p>
+          Embark on a voyage towards your academic aspirations with ease and
+          confidence! Our platform is your compass, guiding you to the
+          university of your dreams with just a few clicks. Seize this moment
+          to unlock your potential and chart a course towards success.
+        </p>
+        <div class="cta-buttons">
+          <a href="{% url 'register' %}" class="cta-btn">Create Account</a>
+          <a href="{% url 'search-page' %}" class="cta-btn cta-btn-alt">Explore Universities</a>
+        </div>
+      </section>
+
+      <!-- Related Topics -->
+      <section class="related-topics">
+        <h2>Related topics</h2>
+        <div class="topics-grid">
+          <div class="topic-card">
+            <a href="#">
+              <img src="{% static 'images/apply1.png' %}" alt="Topic 1" />
+              <div class="overlay"></div>
+              <div class="topic-title">Things you need to know as a high school graduate!</div>
+            </a>
+          </div>
+          <div class="topic-card">
+            <a href="#">
+              <img src="{% static 'images/apply2.png' %}" alt="Topic 2" />
+              <div class="overlay"></div>
+              <div class="topic-title">Why this course is relevant in 2024!</div>
+            </a>
+          </div>
+          <div class="topic-card">
+            <a href="#">
+              <img src="{% static 'images/apply3.png' %}" alt="Topic 3" />
+              <div class="overlay"></div>
+              <div class="topic-title">International studies in Ghana.</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQs Section -->
+      <section class="faqs__section">
+        <h2>FAQs</h2>
+        <button class="accordion">How does the platform work?</button>
+        <div class="panel">
           <p>
-            Embark on a voyage towards your academic aspirations with ease and
-            confidence! Our platform is your compass, guiding you to the
-            university of your dreams with just a few clicks. Seize this moment
-            to unlock your potential and chart a course towards success.
+            Sign up, set preferences, explore options, and connect directly
+            with universities — all in one seamless platform.
           </p>
-          <div class="cta-buttons">
-            <a href="{% url 'register' %}" class="cta-btn">Create Account</a>
-            <a href="{% url 'search-page' %}" class="cta-btn cta-btn-alt">Explore Universities</a>
-          </div>
-        </section>
+        </div>
 
-        <!-- Related Topics -->
-        <section class="related-topics">
-          <h2>Related topics</h2>
-          <div class="topics-grid">
-            <div class="topic-card">
-              <a href="#">
-                <img src="{% static 'images/apply1.png' %}" alt="Topic 1" />
-                <div class="overlay"></div>
-                <div class="topic-title">Things you need to know as a high school graduate!</div>
-              </a>
-            </div>
-            <div class="topic-card">
-              <a href="#">
-                <img src="{% static 'images/apply2.png' %}" alt="Topic 2" />
-                <div class="overlay"></div>
-                <div class="topic-title">Why this course is relevant in 2024!</div>
-              </a>
-            </div>
-            <div class="topic-card">
-              <a href="#">
-                <img src="{% static 'images/apply3.png' %}" alt="Topic 3" />
-                <div class="overlay"></div>
-                <div class="topic-title">International studies in Ghana.</div>
-              </a>
-            </div>
-          </div>
-        </section>
+        <button class="accordion">
+          How does the platform ensure data privacy?
+        </button>
+        <div class="panel">
+          <p>
+            We prioritize data protection and transparency. You have the right
+            to manage your information in your account settings.
+          </p>
+        </div>
 
-        <!-- FAQs Section -->
-        <section class="faqs__section">
-            <h2>FAQs</h2>
-            <button class="accordion">How does the platform work?</button>
-            <div class="panel">
-              <p>
-                Sign up, set preferences, explore options, and connect directly
-                with universities — all in one seamless platform.
-              </p>
-            </div>
-  
-            <button class="accordion">
-              How does the platform ensure data privacy?
-            </button>
-            <div class="panel">
-              <p>
-                We prioritize data protection and transparency. You have the right
-                to manage your information in your account settings.
-              </p>
-            </div>
-  
-            <button class="accordion">
-              What support services does the platform offer?
-            </button>
-            <div class="panel">
-              <p>
-                Our support team is here to help you with any inquiries or issues
-                you may have.
-              </p>
-            </div>
-          </section>
-      </main>
+        <button class="accordion">
+          What support services does the platform offer?
+        </button>
+        <div class="panel">
+          <p>
+            Our support team is here to help you with any inquiries or issues
+            you may have.
+          </p>
+        </div>
+      </section>
 
-      <!-- FOOTER -->
-      <footer class="footer__section">
-        <div class="footer-container">
-          <div class="footer-section">
-            <div class="logo-sec">
-              <a href="#" class="footer-logo">uni<span>App</span></a>
-              <p>Start your tertiary education journey with ease.</p>
-            </div>
-            <div class="social-icons">
-              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="#"><i class="fa-brands fa-instagram"></i></a>
-              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-              <a href="#"><i class="fa-regular fa-envelope"></i></a>
-            </div>
+      <!-- Page Vote Section -->
+
+      <section class="page__vote__section">
+        <p>Was this page helpful?</p>
+        <div class="buttons">
+          <button class="votes">Yes</button>
+          <button class="votes">No</button>
+        </div>
+      </section>
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer__section">
+      <div class="footer-container">
+        <div class="footer-section">
+          <div class="logo-sec">
+            <a href="#" class="footer-logo">uni<span>App</span></a>
+            <p>Start your tertiary education journey with ease.</p>
           </div>
-          <div class="footer-section section">
-            <h3>Features</h3>
+          <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-regular fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-section section">
+          <h3>Features</h3>
+          <ul>
+            <li><a class="unlink" href="#">Advanced Search Filters</a></li>
+            <li>
+              <a class="unlink" href="#">Geo-Based Recommendations</a>
+            </li>
+            <li><a class="unlink" href="#">User Account Management</a></li>
+            <li>
+              <a class="unlink" href="#">Interactive User Interface</a>
+            </li>
+            <li><a class="unlink" href="#">Blog Posts</a></li>
+            <li><a class="unlink" href="#">Media News</a></li>
+            <li><a class="unlink" href="#">FAQs & Support</a></li>
+            <li><a class="unlink" href="#">Multilingual Support</a></li>
+            <li><a class="unlink" href="#">Data Security</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <div class="company">
+            <h3>Company</h3>
             <ul>
-              <li><a class="unlink" href="#">Advanced Search Filters</a></li>
-              <li>
-                <a class="unlink" href="#">Geo-Based Recommendations</a>
-              </li>
-              <li><a class="unlink" href="#">User Account Management</a></li>
-              <li>
-                <a class="unlink" href="#">Interactive User Interface</a>
-              </li>
-              <li><a class="unlink" href="#">Blog Posts</a></li>
-              <li><a class="unlink" href="#">Media News</a></li>
-              <li><a class="unlink" href="#">FAQs & Support</a></li>
-              <li><a class="unlink" href="#">Multilingual Support</a></li>
-              <li><a class="unlink" href="#">Data Security</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Mail Us</a></li>
             </ul>
           </div>
 
-          <div class="footer-section">
-            <div class="company">
-              <h3>Company</h3>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Mail Us</a></li>
-              </ul>
-            </div>
-
-            <div class="contact-us">
-              <h3>Contact Us</h3>
-              <ul>
-                <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
-                <li><a class="unlink" href="#">+233 544 72 6002</a></li>
-                <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
-                <li><a class="unlink" href="#">Accra, Ghana</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="footer-section">
-            <div class="more-info">
-              <h3>More Info</h3>
-              <ul>
-                <li><a href="#">Our Story</a></li>
-                <li><a href="#">Platform Updates</a></li>
-                <li><a href="#">Community Engagement</a></li>
-              </ul>
-            </div>
-
-            <div class="help">
-              <h3>Help & Support</h3>
-              <ul>
-                <li><a href="#">Getting Started FAQs</a></li>
-                <li><a href="#">User Guide</a></li>
-                <li><a href="#">Technical Support</a></li>
-                <li><a href="#">Contact Us</a></li>
-              </ul>
-            </div>
+          <div class="contact-us">
+            <h3>Contact Us</h3>
+            <ul>
+              <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
+              <li><a class="unlink" href="#">+233 544 72 6002</a></li>
+              <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
+              <li><a class="unlink" href="#">Accra, Ghana</a></li>
+            </ul>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
-          <p>All rights reserved.</p>
+
+        <div class="footer-section">
+          <div class="more-info">
+            <h3>More Info</h3>
+            <ul>
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Platform Updates</a></li>
+              <li><a href="#">Community Engagement</a></li>
+            </ul>
+          </div>
+
+          <div class="help">
+            <h3>Help & Support</h3>
+            <ul>
+              <li><a href="#">Getting Started FAQs</a></li>
+              <li><a href="#">User Guide</a></li>
+              <li><a href="#">Technical Support</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
         </div>
-      </footer>
-    </div>
-    <script src="{% static 'js/about.js' %}"></script>
-  </body>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
+        <p>All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="{% static 'js/about.js' %}"></script>
+</body>
+
 </html>

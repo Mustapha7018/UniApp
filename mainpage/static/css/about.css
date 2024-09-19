@@ -745,4 +745,36 @@ hr {
       }
     }
   }
-  
+
+
+/* Page Vote Section */
+
+.page__vote__section {
+  margin: 0;
+
+  p {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+.page__vote__section .buttons {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.page__vote__section .buttons button {
+  background-color: var(--white);
+  width: 200px;
+  height: 45px;
+  margin-right: 1rem;
+  user-select: none;
+  cursor: pointer;
+  border: 2px solid var(--primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page__vote__section .buttons button:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
