@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "accounts",
     "mainpage",
     "blogs",
+    "university",
 ]
 
 SITE_ID = 1
