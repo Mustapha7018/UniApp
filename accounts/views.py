@@ -1,8 +1,10 @@
 import re
 import logging
+from django.http.response import HttpResponseRedirect
 from django.views import View
 from django.conf import settings
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy, reverse
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
@@ -13,7 +15,7 @@ from django.contrib.auth.views import LoginView
 from django.core.mail import EmailMultiAlternatives
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth.tokens import default_token_generator
 from django.views.generic.edit import UpdateView, DeleteView
@@ -23,9 +25,19 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmVie
 
 logger = logging.getLogger(__name__)
 
+
+
+class AdminOnlyView(LoginRequiredMixin, UserPassesTestMixin):
+    template_name = 'admin_page.html'
+
+    def test_func(self) -> bool:
+        return self.request.user.is_superuser
+    
+    def handle_no_permission(self) -> HttpResponseRedirect:
+        return super().handle_no_permission()
+
+
 """ REGISTER USER """
-
-
 class RegisterView(View):
     template_name = "pages/register.html"
 

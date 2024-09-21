@@ -23,7 +23,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.sqlite3
-media/
+# media/
 uniApp/mail_config.py
 
 # VSCode

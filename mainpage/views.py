@@ -48,3 +48,11 @@ class UniPage(TemplateView):
 
 class SearchPage(TemplateView):
     template_name = "pages/search_page.html"
+
+
+class PageUnderConstructionView(TemplateView):
+    template_name = "pages/page_under_construction.html"
+
+
+
+

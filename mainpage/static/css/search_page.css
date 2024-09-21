@@ -245,7 +245,7 @@ header .hero {
   padding: 5rem 10rem;
   color: var(--white);
   position: relative;
-  align-content: center;
+  align-content: left;
 
   .cta-buttons {
     display: flex;
