@@ -1,355 +1,448 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Page</title>
+    <link rel="stylesheet" href="{% static 'css/search_page.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Page</title>
-  <link rel="stylesheet" href="{% static 'css/search_page.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-
-<body>
-  <div class="main-container">
-    <!-- Header -->
-    <header>
-      <nav class="navbar">
-        <div class="left-side">
-          <a href="/" class="nav-logo">uni<span>App</span></a>
-        </div>
-        <div class="hamburger" id="hamburger">
-          <i class="fa fa-bars" id="bars-icon"></i>
-        </div>
-        <div class="right-side" id="right-side">
-          <ul class="nav-links">
-            <li><a class="nav-special" href="{% url 'how-to-apply' %}">Resources</a></li>
-            <li><a class="nav-special" href="{% url 'search-page' %}">Institutions</a></li>
-            <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
-            {% if user.is_authenticated %}
-            <li class="special"><a href="{% url 'profile-update' %}">Profile</a></li>
-            <li class="special">
-              <a href="{% url 'favorites' %}">Favorites</a>
-            </li>
-            {% else %}
-            <li class="special">
-              <a href="{% url 'register' %}">Register</a>
-            </li>
-            <li class="special"><a href="{% url 'login' %}">Login</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </nav>
-      <div class="hero">
-        <h1>Browse Institutions</h1>
-        <div class="search-bar">
-          <input type="text" id="search" placeholder="Search for a uni" />
-          <div class="dropdown">
-            <button class="dropbtn" id="dropbtn">Public</button>
-            <div class="dropdown-content">
-              <a href="#" selected disabled>Public</a>
-              <a href="#">Private</a>
-            </div>
+  <body>
+    <div class="main-container">
+      <!-- Header -->
+      <header>
+        <nav class="navbar">
+          <div class="left-side">
+            <a href="/" class="nav-logo">uni<span>App</span></a>
           </div>
-
-          <i class="fa-solid fa-chevron-down"></i>
-          <button class="search-btn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- Breadcrumb -->
-      <div class="breadcrumb">
-        <p>
-          {% for item in breadcrumb %}
-          {% if forloop.first %}
-          <a href="{% url 'home' %}">{{ item.title }}</a>
-          {% elif forloop.last %}
-          <span>{{ item.title }}</span>
-          {% else %}
-          <a href="{{ item.url }}">{{ item.title }}</a>
-          {% endif %}
-          {% if not forloop.last %}
-          <span>&gt;</span>
-          {% endif %}
-          {% endfor %}
-        </p>
-      </div>
-
-      <!-- Search and Filters -->
-      <section class="search-filter-section">
-        <div class="filter-sort-section">
-          <div class="filter-options">
-            <p><i class="fa-solid fa-sliders"></i> Filter by:</p>
-            <ul class="filter-list">
+          <div class="hamburger" id="hamburger">
+            <i class="fa fa-bars" id="bars-icon"></i>
+          </div>
+          <div class="right-side" id="right-side">
+            <ul class="nav-links">
               <li>
-                <label for="location">Location:</label>
-                <select id="location">
-                  <option value="Accra">Accra</option>
-                  <option value="Kumasi">Kumasi</option>
-                </select>
+                <a class="nav-special" href="{% url 'how-to-apply' %}"
+                  >Resources</a
+                >
               </li>
               <li>
-                <label for="institution-type">Institution Type:</label>
-                <select id="institution-type">
-                  <option value="Public">Public</option>
-                  <option value="Private">Private</option>
-                </select>
+                <a class="nav-special" href="{% url 'search-page' %}"
+                  >Institutions</a
+                >
               </li>
+              <li><a class="nav-special" href="{% url 'about' %}">About</a></li>
+              {% if user.is_authenticated %}
+              <li class="special">
+                <a href="{% url 'profile-update' %}">Profile</a>
+              </li>
+              <li class="special">
+                <a href="{% url 'favorites' %}">Favorites</a>
+              </li>
+              {% else %}
+              <li class="special">
+                <a href="{% url 'register' %}">Register</a>
+              </li>
+              <li class="special"><a href="{% url 'login' %}">Login</a></li>
+              {% endif %}
             </ul>
           </div>
-
-          <div class="sort-options">
-            <p>8 institutions found</p>
-            <select>
-              <option value="A-Z">Sort by: A - Z</option>
-              <option value="Z-A">Sort by: Z - A</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- University Cards -->
-      <section class="universities-section">
-        <div class="uni-grid">
-          <!-- University Card -->
-          <a href="{% url 'ug-site' %}">
-            <div class="uni-card">
-              <img src="{% static 'images/card.png' %}" alt="University of Ghana">
-              <label class="favorite-icon">
-                <input type="checkbox" class="favorite-checkbox">
-                <i class="fa fa-heart"></i>
-              </label>
-              <div class="uni-details">
-                <h3>University of Ghana</h3>
-                <p>Legon, Accra</p>
+        </nav>
+        <div class="hero">
+          <h1>Browse Institutions</h1>
+          <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for a uni" />
+            <div class="dropdown">
+              <button class="dropbtn" id="dropbtn">Public</button>
+              <div class="dropdown-content">
+                <a href="#" selected disabled>Public</a>
+                <a href="#">Private</a>
               </div>
             </div>
-          </a>
 
-
-          <div class="uni-card">
-            <img src="{% static 'images/ust.png' %}" alt="Kwame Nkrumah University of Science & Technology">
-            <div class="favorite-icon" onclick="toggleFavorite(this)">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>Kwame Nkrumah University of Science & Technology</h3>
-              <p>Tech, Kumasi</p>
-            </div>
-          </div>
-          <!-- More University Cards -->
-          <div class="uni-card">
-            <img src="{% static 'images/ashesi.png' %}" alt="Islamic State University">
-            <div class="favorite-icon">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>Ashesi University</h3>
-              <p>Berekuso, Accra</p>
-            </div>
-          </div>
-          <div class="uni-card">
-            <img src="{% static 'images/ucc.png' %}" alt="University of Cape Coast">
-            <div class="favorite-icon">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>University of Cape Coast</h3>
-              <p>Cape Coast, Central</p>
-            </div>
-          </div>
-          <div class="uni-card">
-            <img src="{% static 'images/uenr.png' %}" alt="Christian Village University">
-            <div class="favorite-icon">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>University of Energy and Natural Resources</h3>
-              <p>Berekum, Sunyani</p>
-            </div>
-          </div>
-          <div class="uni-card">
-            <img src="{% static 'images/gimpa.png' %}" alt="Central College University">
-            <div class="favorite-icon">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>Ghana Institute of Management and Public Administration (GIMPA)</h3>
-              <p>Greenhill, Accra</p>
-            </div>
-          </div>
-          <div class="uni-card">
-            <img src="{% static 'images/upsa.png' %}" alt="Central College University">
-            <div class="favorite-icon">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>University of Professional Studies, Accra (UPSA)</h3>
-              <p>Madina, Accra</p>
-            </div>
-          </div>
-          <div class="uni-card">
-            <img src="{% static 'images/uew.png' %}" alt="Central College University">
-            <div class="favorite-icon">
-              <i class="fa fa-heart"></i>
-            </div>
-            <div class="uni-details">
-              <h3>University of Education, Winneba</h3>
-              <p>Winneba, Central</p>
-            </div>
+            <i class="fa-solid fa-chevron-down"></i>
+            <button class="search-btn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
           </div>
         </div>
-      </section>
+      </header>
 
-      <!-- Call to Action Section -->
-      <section class="small-section">
-        <div class="small-content">
-          <div class="image-side">
-            <img src="{% static 'images/small_group.png' %}" alt="Students studying">
-          </div>
-          <div class="small-text">
-            <p>Creating an account with us won't cost you a thing! Access our extensive database of institutions and
-              find your perfect academic match, all at no charge.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQs Section -->
-      <section class="faqs__section">
-        <h2>FAQs</h2>
-        <button class="accordion">How does the platform work?</button>
-        <div class="panel">
+      <main>
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
           <p>
-            Sign up, set preferences, explore options, and connect directly
-            with universities — all in one seamless platform.
+            {% for item in breadcrumb %} {% if forloop.first %}
+            <a href="{% url 'home' %}">{{ item.title }}</a>
+            {% elif forloop.last %}
+            <span>{{ item.title }}</span>
+            {% else %}
+            <a href="{{ item.url }}">{{ item.title }}</a>
+            {% endif %} {% if not forloop.last %}
+            <span>&gt;</span>
+            {% endif %} {% endfor %}
           </p>
         </div>
 
-        <button class="accordion">
-          How does the platform ensure data privacy?
-        </button>
-        <div class="panel">
-          <p>
-            We prioritize data protection and transparency. You have the right
-            to manage your information in your account settings.
-          </p>
-        </div>
+        <!-- Search and Filters -->
+        <section class="search-filter-section">
+          <div class="filter-sort-section">
+            <div class="filter-options">
+              <p><i class="fa-solid fa-sliders"></i> Filter by:</p>
+              <ul class="filter-list">
+                <li>
+                  <label for="location">Location:</label>
+                  <select id="location">
+                    <option value="Accra">Accra</option>
+                    <option value="Kumasi">Kumasi</option>
+                  </select>
+                </li>
+                <li>
+                  <label for="institution-type">Institution Type:</label>
+                  <select id="institution-type">
+                    <option value="Public">Public</option>
+                    <option value="Private">Private</option>
+                  </select>
+                </li>
+              </ul>
+            </div>
 
-        <button class="accordion">
-          What support services does the platform offer?
-        </button>
-        <div class="panel">
-          <p>
-            Our support team is here to help you with any inquiries or issues
-            you may have.
-          </p>
-        </div>
-      </section>
-      
-      <!-- Page Vote Section -->
-  
-      <section class="page__vote__section">
-        <p>Was this page helpful?</p>
-        <div class="buttons">
-          <button class="votes">Yes</button>
-          <button class="votes">No</button>
-        </div>
-      </section>
-    </main>
-
-
-
-
-    <!-- FOOTER -->
-    <footer class="footer__section">
-      <div class="footer-container">
-        <div class="footer-section">
-          <div class="logo-sec">
-            <a href="#" class="footer-logo">uni<span>App</span></a>
-            <p>Start your tertiary education journey with ease.</p>
+            <div class="sort-options">
+              <p>8 institutions found</p>
+              <select>
+                <option value="A-Z">Sort by: A - Z</option>
+                <option value="Z-A">Sort by: Z - A</option>
+              </select>
+            </div>
           </div>
-          <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#"><i class="fa-regular fa-envelope"></i></a>
-          </div>
-        </div>
-        <div class="footer-section section">
-          <h3>Features</h3>
-          <ul>
-            <li><a class="unlink" href="#">Advanced Search Filters</a></li>
-            <li>
-              <a class="unlink" href="#">Geo-Based Recommendations</a>
-            </li>
-            <li><a class="unlink" href="#">User Account Management</a></li>
-            <li>
-              <a class="unlink" href="#">Interactive User Interface</a>
-            </li>
-            <li><a class="unlink" href="#">Blog Posts</a></li>
-            <li><a class="unlink" href="#">Media News</a></li>
-            <li><a class="unlink" href="#">FAQs & Support</a></li>
-            <li><a class="unlink" href="#">Multilingual Support</a></li>
-            <li><a class="unlink" href="#">Data Security</a></li>
-          </ul>
-        </div>
+        </section>
 
-        <div class="footer-section">
-          <div class="company">
-            <h3>Company</h3>
+        <!-- University Cards -->
+        <section class="universities-section">
+          <div class="uni-grid">
+            <!-- University Card -->
+            <a href="{% url 'ug-site' %}">
+              <div class="uni-card">
+                <img
+                  src="{% static 'images/card.png' %}"
+                  alt="University of Ghana"
+                />
+                <label class="favorite-icon">
+                  <input type="checkbox" class="favorite-checkbox" />
+                  <i class="fa fa-heart"></i>
+                </label>
+                <div class="uni-details">
+                  <h3>University of Ghana</h3>
+                  <p>Legon, Accra</p>
+                </div>
+              </div>
+            </a>
+
+            <div class="uni-card">
+              <img
+                src="{% static 'images/ust.png' %}"
+                alt="Kwame Nkrumah University of Science & Technology"
+              />
+              <div class="favorite-icon" onclick="toggleFavorite(this)">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>Kwame Nkrumah University of Science & Technology</h3>
+                <p>Tech, Kumasi</p>
+              </div>
+            </div>
+            <!-- More University Cards -->
+            <div class="uni-card">
+              <img
+                src="{% static 'images/ashesi.png' %}"
+                alt="Islamic State University"
+              />
+              <div class="favorite-icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>Ashesi University</h3>
+                <p>Berekuso, Accra</p>
+              </div>
+            </div>
+            <div class="uni-card">
+              <img
+                src="{% static 'images/ucc.png' %}"
+                alt="University of Cape Coast"
+              />
+              <div class="favorite-icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>University of Cape Coast</h3>
+                <p>Cape Coast, Central</p>
+              </div>
+            </div>
+            <div class="uni-card">
+              <img
+                src="{% static 'images/uenr.png' %}"
+                alt="Christian Village University"
+              />
+              <div class="favorite-icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>University of Energy and Natural Resources</h3>
+                <p>Berekum, Sunyani</p>
+              </div>
+            </div>
+            <div class="uni-card">
+              <img
+                src="{% static 'images/gimpa.png' %}"
+                alt="Central College University"
+              />
+              <div class="favorite-icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>
+                  Ghana Institute of Management and Public Administration
+                  (GIMPA)
+                </h3>
+                <p>Greenhill, Accra</p>
+              </div>
+            </div>
+            <div class="uni-card">
+              <img
+                src="{% static 'images/upsa.png' %}"
+                alt="Central College University"
+              />
+              <div class="favorite-icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>University of Professional Studies, Accra (UPSA)</h3>
+                <p>Madina, Accra</p>
+              </div>
+            </div>
+            <div class="uni-card">
+              <img
+                src="{% static 'images/uew.png' %}"
+                alt="Central College University"
+              />
+              <div class="favorite-icon">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div class="uni-details">
+                <h3>University of Education, Winneba</h3>
+                <p>Winneba, Central</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="small-section">
+          <div class="small-content">
+            <div class="image-side">
+              <img
+                src="{% static 'images/small_group.png' %}"
+                alt="Students studying"
+              />
+            </div>
+            <div class="small-text">
+              <p>
+                Creating an account with us won't cost you a thing! Access our
+                extensive database of institutions and find your perfect
+                academic match, all at no charge.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQs Section -->
+        <section class="faqs__section">
+          <h2>FAQs</h2>
+          <button class="accordion">How does the platform work?</button>
+          <div class="panel">
+            <p>
+              Sign up, set preferences, explore options, and connect directly
+              with universities — all in one seamless platform.
+            </p>
+          </div>
+
+          <button class="accordion">
+            How does the platform ensure data privacy?
+          </button>
+          <div class="panel">
+            <p>
+              We prioritize data protection and transparency. You have the right
+              to manage your information in your account settings.
+            </p>
+          </div>
+
+          <button class="accordion">
+            What support services does the platform offer?
+          </button>
+          <div class="panel">
+            <p>
+              Our support team is here to help you with any inquiries or issues
+              you may have.
+            </p>
+          </div>
+        </section>
+
+        <!-- Page Vote Section -->
+
+        <section class="page__vote__section">
+          <p id="page-vote-text">Was this page helpful?</p>
+          <div class="buttons" id="feedback-buttons">
+            <button class="yes-btn" id="yes-btn">Yes</button>
+            <button class="no-btn" id="no-btn">No</button>
+          </div>
+          <div
+            class="thank-you-message"
+            id="thank-you-message"
+            style="display: none"
+          >
+            <p>Thank you for your feedback!</p>
+            <div class="survey-link">
+              <p style="font-weight: normal">
+                If you have more feedback, please fill out our survey
+                <a href="https://www.surveymonkey.com/r/HVK6DV7" target="_blank"
+                  >here</a
+                >
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="footer__section">
+        <div class="footer-container">
+          <div class="footer-section">
+            <div class="logo-sec">
+              <a href="#" class="footer-logo">uni<span>App</span></a>
+              <p>Start your tertiary education journey with ease.</p>
+            </div>
+            <div class="social-icons">
+              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+          </div>
+          <div class="footer-section section">
+            <h3>Features</h3>
             <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Mail Us</a></li>
+              <li><a class="unlink" href="#">Advanced Search Filters</a></li>
+              <li>
+                <a class="unlink" href="#">Geo-Based Recommendations</a>
+              </li>
+              <li><a class="unlink" href="#">User Account Management</a></li>
+              <li>
+                <a class="unlink" href="#">Interactive User Interface</a>
+              </li>
+              <li><a class="unlink" href="#">Blog Posts</a></li>
+              <li><a class="unlink" href="#">Media News</a></li>
+              <li><a class="unlink" href="#">FAQs & Support</a></li>
+              <li><a class="unlink" href="#">Multilingual Support</a></li>
+              <li><a class="unlink" href="#">Data Security</a></li>
             </ul>
           </div>
 
-          <div class="contact-us">
-            <h3>Contact Us</h3>
-            <ul>
-              <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
-              <li><a class="unlink" href="#">+233 544 72 6002</a></li>
-              <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
-              <li><a class="unlink" href="#">Accra, Ghana</a></li>
-            </ul>
+          <div class="footer-section">
+            <div class="company">
+              <h3>Company</h3>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Mail Us</a></li>
+              </ul>
+            </div>
+
+            <div class="contact-us">
+              <h3>Contact Us</h3>
+              <ul>
+                <li><a class="unlink" href="#">uniapp135@gmail.com</a></li>
+                <li><a class="unlink" href="#">+233 544 72 6002</a></li>
+                <li><a class="unlink" href="#">East Legon 1124-Ave</a></li>
+                <li><a class="unlink" href="#">Accra, Ghana</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <div class="more-info">
+              <h3>More Info</h3>
+              <ul>
+                <li><a href="#">Our Story</a></li>
+                <li><a href="#">Platform Updates</a></li>
+                <li><a href="#">Community Engagement</a></li>
+              </ul>
+            </div>
+
+            <div class="help">
+              <h3>Help & Support</h3>
+              <ul>
+                <li><a href="#">Getting Started FAQs</a></li>
+                <li><a href="#">User Guide</a></li>
+                <li><a href="#">Technical Support</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-
-        <div class="footer-section">
-          <div class="more-info">
-            <h3>More Info</h3>
-            <ul>
-              <li><a href="#">Our Story</a></li>
-              <li><a href="#">Platform Updates</a></li>
-              <li><a href="#">Community Engagement</a></li>
-            </ul>
-          </div>
-
-          <div class="help">
-            <h3>Help & Support</h3>
-            <ul>
-              <li><a href="#">Getting Started FAQs</a></li>
-              <li><a href="#">User Guide</a></li>
-              <li><a href="#">Technical Support</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul>
-          </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
+          <p>All rights reserved.</p>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; <span id="currentYear"></span> GUAS Uni Applications.</p>
-        <p>All rights reserved.</p>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
-  </div>
+    <script>
+      function showThankYouMessage() {
+        document.getElementById("feedback-buttons").style.display = "none";
+        document.getElementById("thank-you-message").style.display = "block";
+        document.getElementById("page-vote-text").style.display = "none";
+      }
 
-  <script src="{% static 'js/about.js' %}"></script>
-</body>
+      function submitFeedback(feedback) {
+        $.ajax({
+          type: "POST",
+          url: "{% url 'submit_feedback' %}",
+          data: {
+            feedback: feedback,
+            page: "search page",
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          success: function (response) {
+            console.log(response.message);
+          },
+          error: function (response) {
+            console.log(response.responseJSON.message);
+          },
+        });
+      }
 
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("yes-btn")
+          .addEventListener("click", function () {
+            submitFeedback("Yes");
+            showThankYouMessage();
+          });
+
+        document
+          .getElementById("no-btn")
+          .addEventListener("click", function () {
+            submitFeedback("No");
+            showThankYouMessage();
+          });
+      });
+    </script>
+
+    <script src="{% static 'js/about.js' %}"></script>
+  </body>
 </html>

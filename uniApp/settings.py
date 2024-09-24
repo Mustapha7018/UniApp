@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "mainpage",
     "blogs",
     "university",
+    "feedback",
 ]
 
 SITE_ID = 1

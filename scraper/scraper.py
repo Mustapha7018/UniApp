@@ -1,4 +1,5 @@
 from django.db import models
+from university.models import University
 
 # Create your models here.
 from django.db import models
@@ -8,25 +9,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-class University(models.Model):
-    name = models.CharField(max_length=255)
-    website = models.URLField()
-    location = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    
-    def __str__(self):
-        return self.name
 
 class Scraper:
     def __init__(self):
-        self.driver = webdriver.Chrome()  # Ensure you have ChromeDriver installed and in PATH
+        self.driver = webdriver.Chrome()
     
     def scrape_universities(self):
         universities = [
-            # Add the 25 Ghanaian universities here
             {"name": "University of Ghana", "url": "https://www.ug.edu.gh/"},
             {"name": "Kwame Nkrumah University of Science and Technology", "url": "https://www.knust.edu.gh/"},
-            # ... Add more universities
         ]
         
         for uni in universities:
@@ -41,11 +32,9 @@ class Scraper:
                 EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
             
-            # Extract information (customize these selectors based on the actual website structure)
             location = self.safe_find_element(By.CSS_SELECTOR, ".university-location")
             description = self.safe_find_element(By.CSS_SELECTOR, ".university-description")
             
-            # Create or update University model
             University.objects.update_or_create(
                 name=name,
                 defaults={
@@ -70,6 +59,5 @@ class Scraper:
     def __del__(self):
         self.driver.quit()
 
-# Usage:
 # scraper = Scraper()
 # scraper.scrape_universities()
