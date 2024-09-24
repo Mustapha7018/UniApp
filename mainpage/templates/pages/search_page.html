@@ -55,21 +55,20 @@
         </nav>
         <div class="hero">
           <h1>Browse Institutions</h1>
-          <div class="search-bar">
-            <input type="text" id="search" placeholder="Search for a uni" />
+          <form id="search-form" method="GET" action="{% url 'search-page' %}" class="search-bar">
+            <input type="text" id="search" name="search" placeholder="Search for a uni" value="{{ request.GET.search }}">
             <div class="dropdown">
-              <button class="dropbtn" id="dropbtn">Public</button>
+              <button type="button" class="dropbtn" id="dropbtn">{{ request.GET.type|default:"Public" }}</button>
               <div class="dropdown-content">
-                <a href="#" selected disabled>Public</a>
-                <a href="#">Private</a>
+                <a href="#" data-value="Public">Public</a>
+                <a href="#" data-value="Private">Private</a>
               </div>
             </div>
-
-            <i class="fa-solid fa-chevron-down"></i>
-            <button class="search-btn">
+            <input type="hidden" id="institution-type" name="type" value="{{ request.GET.type|default:'Public' }}">
+            <button type="submit" class="search-btn">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-          </div>
+          </form>
         </div>
       </header>
 
@@ -113,7 +112,9 @@
             </div>
 
             <div class="sort-options">
-              <p>8 institutions found</p>
+              {% if search_performed %}
+              <p>{{ universities|length }} institution{{ universities|length|pluralize:"s" }} found</p>
+              {% endif %}
               <select>
                 <option value="A-Z">Sort by: A - Z</option>
                 <option value="Z-A">Sort by: Z - A</option>
@@ -125,119 +126,23 @@
         <!-- University Cards -->
         <section class="universities-section">
           <div class="uni-grid">
-            <!-- University Card -->
-            <a href="{% url 'ug-site' %}">
+            {% for university in universities %}
+            <a href="{% url 'university-detail' university.id %}">
               <div class="uni-card">
-                <img
-                  src="{% static 'images/card.png' %}"
-                  alt="University of Ghana"
-                />
+                <img src="{{ university.card_image.url }}" alt="{{ university.name }}" />
                 <label class="favorite-icon">
                   <input type="checkbox" class="favorite-checkbox" />
                   <i class="fa fa-heart"></i>
                 </label>
                 <div class="uni-details">
-                  <h3>University of Ghana</h3>
-                  <p>Legon, Accra</p>
+                  <h3>{{ university.name }}</h3>
+                  <p>{{ university.city }}, {{ university.region }}</p>
                 </div>
               </div>
             </a>
-
-            <div class="uni-card">
-              <img
-                src="{% static 'images/ust.png' %}"
-                alt="Kwame Nkrumah University of Science & Technology"
-              />
-              <div class="favorite-icon" onclick="toggleFavorite(this)">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>Kwame Nkrumah University of Science & Technology</h3>
-                <p>Tech, Kumasi</p>
-              </div>
-            </div>
-            <!-- More University Cards -->
-            <div class="uni-card">
-              <img
-                src="{% static 'images/ashesi.png' %}"
-                alt="Islamic State University"
-              />
-              <div class="favorite-icon">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>Ashesi University</h3>
-                <p>Berekuso, Accra</p>
-              </div>
-            </div>
-            <div class="uni-card">
-              <img
-                src="{% static 'images/ucc.png' %}"
-                alt="University of Cape Coast"
-              />
-              <div class="favorite-icon">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>University of Cape Coast</h3>
-                <p>Cape Coast, Central</p>
-              </div>
-            </div>
-            <div class="uni-card">
-              <img
-                src="{% static 'images/uenr.png' %}"
-                alt="Christian Village University"
-              />
-              <div class="favorite-icon">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>University of Energy and Natural Resources</h3>
-                <p>Berekum, Sunyani</p>
-              </div>
-            </div>
-            <div class="uni-card">
-              <img
-                src="{% static 'images/gimpa.png' %}"
-                alt="Central College University"
-              />
-              <div class="favorite-icon">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>
-                  Ghana Institute of Management and Public Administration
-                  (GIMPA)
-                </h3>
-                <p>Greenhill, Accra</p>
-              </div>
-            </div>
-            <div class="uni-card">
-              <img
-                src="{% static 'images/upsa.png' %}"
-                alt="Central College University"
-              />
-              <div class="favorite-icon">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>University of Professional Studies, Accra (UPSA)</h3>
-                <p>Madina, Accra</p>
-              </div>
-            </div>
-            <div class="uni-card">
-              <img
-                src="{% static 'images/uew.png' %}"
-                alt="Central College University"
-              />
-              <div class="favorite-icon">
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="uni-details">
-                <h3>University of Education, Winneba</h3>
-                <p>Winneba, Central</p>
-              </div>
-            </div>
+            {% empty %}
+            <p>No universities found.</p>
+            {% endfor %}
           </div>
         </section>
 

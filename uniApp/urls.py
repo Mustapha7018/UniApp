@@ -34,6 +34,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("blogs/", include(wagtail_urls)),
     path("feedback/", include("feedback.urls")),
+    path("university/", include("university.urls")),
 ]
 
 if settings.DEBUG:

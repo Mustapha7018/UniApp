@@ -12,7 +12,7 @@ class University(models.Model):
     region = models.CharField(max_length=100)
     logo = models.ImageField(upload_to='university_logos/')
     type = models.CharField(
-        max_length=3,
+        max_length=10,
         choices=UniversityType.choices,
         default=UniversityType.PUBLIC
     )
