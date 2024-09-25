@@ -51,8 +51,9 @@ class UniversityDetailView(DetailView):
     template_name = 'pages/institution.html'
     context_object_name = 'university'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Get 5 random universities excluding the current one (Related Universities)
-        context['related_universities'] = University.objects.exclude(pk=self.object.pk).order_by('?')[:5]
-        return context
+    def get_queryset(self):
+        return super().get_queryset().select_related('location').prefetch_related(
+            'academic_programs',
+            'general_requirements',
+            'resources'
+        )

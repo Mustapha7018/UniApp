@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>University of Ghana</title>
+    <title>{{ university.name }}</title>
     <link rel="stylesheet" href="{% static 'css/institution.css' %}" />
     <link
       rel="stylesheet"
@@ -53,62 +53,66 @@
             </ul>
           </div>
         </nav>
-        <div class="hero">
+        <div
+          class="hero"
+          style="background-image: url('{{ university.banner.url }}');"
+        >
           <h1>University of Ghana</h1>
           <div class="cta-buttons">
-            <a href="#" class="cta-btn cta-btn-alt">
-              Graduate
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </a>
-            <a href="#" class="cta-btn">
+            {% if university.undergraduate_program_url %}
+            <a
+              href="{{ university.undergraduate_program_url }}"
+              class="cta-btn"
+            >
               Undergraduate
               <i class="fa-solid fa-up-right-from-square"></i>
             </a>
+            {% endif %} {% if university.graduate_program_url %}
+            <a
+              href="{{ university.graduate_program_url }}"
+              class="cta-btn cta-btn-alt"
+            >
+              Graduate
+              <i class="fa-solid fa-up-right-from-square"></i>
+            </a>
+            {% endif %}
           </div>
         </div>
       </header>
 
       <main>
-        <div class="breadcrumb">
+        <!-- <div class="breadcrumb">
           <p>
-            {% for item in breadcrumb %} {% if forloop.first %}
-            <a href="{% url 'home' %}">{{ item.title }}</a>
-            {% elif forloop.last %}
-            <span>{{ item.title }}</span>
-            {% else %}
-            <a href="{{ item.url }}">{{ item.title }}</a>
-            {% endif %} {% if not forloop.last %}
-            <span>&gt;</span>
-            {% endif %} {% endfor %}
+            {% for item in breadcrumb %}
+              {% if forloop.first %}
+                <a href="{{ item.url }}">{{ item.title }}</a>
+              {% elif forloop.last %}
+                <span>{{ item.title }}</span>
+              {% else %}
+                <a href="{{ item.url }}">{{ item.title }}</a>
+              {% endif %}
+              {% if not forloop.last %}
+                <span class="breadcrumb-separator">&gt;</span>
+              {% endif %}
+            {% endfor %}
           </p>
-        </div>
+        </div> -->
 
         <!-- About Section -->
         <section class="about-section">
           <div class="about-header">
-            <h2>About UG</h2>
+            <h2>About {{ university.abbreviation|default:university.name }}</h2>
             <img
-              src="{% static 'images/ug_logo.png' %}"
+              src="{{ university.logo.url }}"
               alt="University of Ghana Logo"
               class="uni-logo"
             />
           </div>
-          <p>
-            The <a href="#">University of Ghana</a> is a public university
-            located in Accra, Ghana. It holds the distinction of being the
-            oldest public university in the country. The university was
-            established in 1948 as the University College of the Gold Coast, an
-            affiliate college of the University of London, which supervised its
-            academic programs and awarded degrees.
-          </p>
-          <p>
-            Located on the west side of the Accra Legon Hills and northeast of
-            the center of Accra, the University of Ghana has over 60,000
-            registered students. It originally focused on liberal arts, social
-            sciences, law, basic science, agriculture, and medicine. However,
-            the curriculum has expanded to include more technology-based and
-            vocational courses as well as postgraduate training.
-          </p>
+          {% for paragraph in university.about_paragraphs.all %}
+          <p>{{ paragraph.content }}</p>
+          {% empty %}
+          <p>No information available.</p>
+          {% endfor %}
         </section>
 
         <!-- Academic programmes -->
@@ -119,13 +123,9 @@
             across multiple fields of study. These encompass:
           </p>
           <ul>
-            <li>Arts</li>
-            <li>Sciences</li>
-            <li>Business</li>
-            <li>Law</li>
-            <li>Engineering</li>
-            <li>Social Sciences</li>
-            <li>Health Sciences</li>
+            {% for program in university.academic_programs.all %}
+            <li>{{ program.name }}</li>
+            {% endfor %}
           </ul>
           <p>
             Additionally, the university offers a variety of advanced programs,
@@ -137,36 +137,9 @@
         <section class="entry-requirements">
           <h2>General entry requirements</h2>
           <ol>
-            <li>
-              WASSCE Holders: Must have credit passes in six subjects, including
-              English, Mathematics, and three electives relevant to the chosen
-              program.
-            </li>
-            <li>
-              GCE A-Level Holders: Need passes in three subjects, one at least
-              at Grade D or better, plus credit passes in five O-Level subjects
-              including English and Mathematics.
-            </li>
-            <li>
-              International Baccalaureate (IB) Holders: Require a minimum of 24
-              points with core and elective subjects.
-            </li>
-            <li>
-              American High School Grade 12 Holders: Should have a final GPA of
-              at least 3.0.
-            </li>
-            <li>
-              Applicants with Other Qualifications: Considered on a case-by-case
-              basis.
-            </li>
-            <li>
-              Mature Students: Assessed based on age, experience, and
-              performance in an entrance exam and/or interview.
-            </li>
-            <li>
-              Postgraduate Applicants: Generally need a good first degree, at
-              least a second-class lower division.
-            </li>
+            {% for requirement in university.general_requirements.all %}
+            <li>{{ requirement.requirement }}</li>
+            {% endfor %}
           </ol>
         </section>
 
@@ -174,23 +147,50 @@
         <section class="location-section">
           <h2>Address</h2>
           <p>
-            University of Ghana<br />
-            Legon Boundary, Accra, Ghana<br />
-            P.O. Box LG 25, Legon, Accra, Ghana
+            {{ university.address_line1 }}<br />
+            {{ university.address_line2 }}<br />
+            {{ university.address_line3 }}
           </p>
           <p>
-            Website: <a href="https://www.ug.edu.gh">https://www.ug.edu.gh</a>
+            Website:
+            <a href="{{ university.website_url }}"
+              >{{ university.website_url }}</a
+            >
           </p>
           <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            {% if university.twitter %}
+            <a href="{{ university.twitter }}"
+              ><i class="fa-brands fa-x-twitter"></i
+            ></a>
+            {% endif %} {% if university.instagram %}
+            <a href="{{ university.instagram }}"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            {% endif %} {% if university.facebook %}
+            <a href="{{ university.facebook }}"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            {% endif %} {% if university.linkedin %}
+            <a href="{{ university.linkedin }}"
+              ><i class="fa-brands fa-linkedin"></i
+            ></a>
+            {% endif %}
           </div>
           <div class="map">
-            <iframe
-              src="https://maps.google.com/maps?q=University%20of%20Ghana&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-            ></iframe>
+            {% if university.map_location %}
+            <div class="map">
+              <iframe
+                src="{{ university.map_location }}"
+                width="600"
+                height="450"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+            {% else %}
+            <p>Map not available.</p>
+            {% endif %}
           </div>
         </section>
 
