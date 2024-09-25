@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import University
+from .models import University, Location  
 from django.db.models import Q
 
 class UniversityListView(ListView):
@@ -13,7 +13,8 @@ class UniversityListView(ListView):
         search_query = self.request.GET.get('search', '').strip()
         sort_by = self.request.GET.get('sort', 'name')
         filter_type = self.request.GET.get('type', '')
-        self.search_performed = bool(search_query or filter_type)
+        filter_location = self.request.GET.get('location', '')
+        self.search_performed = bool(search_query or filter_type or filter_location)
 
         if search_query:
             queryset = queryset.filter(
@@ -29,9 +30,12 @@ class UniversityListView(ListView):
                 filter_type = 'PUB'
             queryset = queryset.filter(type=filter_type)
 
-        if sort_by == 'name':
+        if filter_location:
+            queryset = queryset.filter(location__name=filter_location)
+
+        if sort_by == 'A-Z':
             queryset = queryset.order_by('name')
-        elif sort_by == 'name_desc':
+        elif sort_by == 'Z-A':
             queryset = queryset.order_by('-name')
 
         return queryset
@@ -39,9 +43,16 @@ class UniversityListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['search_performed'] = self.search_performed
+        context['locations'] = Location.objects.all()  
         return context
 
 class UniversityDetailView(DetailView):
     model = University
     template_name = 'pages/institution.html'
     context_object_name = 'university'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get 5 random universities excluding the current one (Related Universities)
+        context['related_universities'] = University.objects.exclude(pk=self.object.pk).order_by('?')[:5]
+        return context

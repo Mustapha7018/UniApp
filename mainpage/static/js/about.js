@@ -82,3 +82,60 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = url.toString();
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const locationSelect = document.getElementById("filter-location");
+  const institutionTypeSelect = document.getElementById("filter-institution-type");
+  const sortOrderSelect = document.getElementById("sort-order");
+
+  function getCurrentQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params;
+  }
+
+  function updateQueryParam(key, value) {
+    const params = getCurrentQueryParams();
+    if (value) {
+      if (key === 'type') {
+        // Convert display value to backend value
+        if (value === 'Public') {
+          params.set(key, 'PUB');
+        } else if (value === 'Private') {
+          params.set(key, 'PRI');
+        }
+      } else {
+        params.set(key, value);
+      }
+    } else {
+      params.delete(key);
+    }
+    return params.toString();
+  }
+
+  function reloadPageWithParams(newParams) {
+    const newURL = `${window.location.pathname}?${newParams}`;
+    window.location.href = newURL;
+  }
+
+  // Event listener for Location filter
+  locationSelect.addEventListener("change", function () {
+    const selectedValue = this.value;
+    const updatedParams = updateQueryParam("location", selectedValue);
+    reloadPageWithParams(updatedParams);
+  });
+
+  // Event listener for Institution Type filter
+  institutionTypeSelect.addEventListener("change", function () {
+    const selectedValue = this.value;
+    const updatedParams = updateQueryParam("type", selectedValue);
+    reloadPageWithParams(updatedParams);
+  });
+
+  // Event listener for Sort Order
+  sortOrderSelect.addEventListener("change", function () {
+    const selectedValue = this.value;
+    const updatedParams = updateQueryParam("sort", selectedValue);
+    reloadPageWithParams(updatedParams);
+  });
+});

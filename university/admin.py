@@ -1,11 +1,14 @@
 from django.contrib import admin
-from .models import University
+from .models import University, Location
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
 
 @admin.register(University)
 class UniversityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'city', 'region', 'type')
-    list_filter = ('type', 'region')
+    list_display = ('name', 'type', 'location')
+    list_filter = ('type', 'location')
     search_fields = ('name', 'city', 'region')
-
-# admin.site.register(University, UniversityAdmin)
 

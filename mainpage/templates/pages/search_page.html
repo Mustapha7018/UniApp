@@ -95,17 +95,22 @@
               <p><i class="fa-solid fa-sliders"></i> Filter by:</p>
               <ul class="filter-list">
                 <li>
-                  <label for="location">Location:</label>
-                  <select id="location">
-                    <option value="Accra">Accra</option>
-                    <option value="Kumasi">Kumasi</option>
+                  <label for="filter-location">Location:</label>
+                  <select id="filter-location" name="location">
+                    <option value="">All</option>
+                    {% for loc in locations %}
+                      <option value="{{ loc.name }}" {% if request.GET.location == loc.name %}selected{% endif %}>
+                        {{ loc.name }}
+                      </option>
+                    {% endfor %}
                   </select>
                 </li>
                 <li>
-                  <label for="institution-type">Institution Type:</label>
-                  <select id="institution-type">
-                    <option value="Public">Public</option>
-                    <option value="Private">Private</option>
+                  <label for="filter-institution-type">Institution Type:</label>
+                  <select id="filter-institution-type" name="type">
+                    <option value="">All</option>
+                    <option value="Public" {% if request.GET.type == "PUB" %}selected{% endif %}>Public</option>
+                    <option value="Private" {% if request.GET.type == "PRI" %}selected{% endif %}>Private</option>
                   </select>
                 </li>
               </ul>
@@ -115,9 +120,10 @@
               {% if search_performed %}
               <p>{{ universities|length }} institution{{ universities|length|pluralize:"s" }} found</p>
               {% endif %}
-              <select>
-                <option value="A-Z">Sort by: A - Z</option>
-                <option value="Z-A">Sort by: Z - A</option>
+              <label for="sort-order">Sort by:</label>
+              <select id="sort-order" name="sort">
+                <option value="A-Z" {% if request.GET.sort == "A-Z" %}selected{% endif %}>A - Z</option>
+                <option value="Z-A" {% if request.GET.sort == "Z-A" %}selected{% endif %}>Z - A</option>
               </select>
             </div>
           </div>
