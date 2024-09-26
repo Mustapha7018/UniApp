@@ -11,6 +11,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   </head>
 
   <body>
@@ -58,7 +60,10 @@
           <form id="search-form" method="GET" action="{% url 'search-page' %}" class="search-bar">
             <input type="text" id="search" name="search" placeholder="Search for a uni" value="{{ request.GET.search }}">
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="dropbtn">{{ request.GET.type|default:"Public" }}</button>
+              <button type="button" class="dropbtn" id="dropbtn">
+                {{ request.GET.type|default:"Public" }}
+                <i class="fa-solid fa-caret-down"></i>
+              </button>
               <div class="dropdown-content">
                 <a href="#" data-value="Public">Public</a>
                 <a href="#" data-value="Private">Private</a>
@@ -137,7 +142,7 @@
               <div class="uni-card">
                 <img src="{{ university.card_image.url }}" alt="{{ university.name }}" />
                 <label class="favorite-icon">
-                  <input type="checkbox" class="favorite-checkbox" />
+                  <input type="checkbox" class="favorite-checkbox" data-university-id="{{ university.id }}" {% if university.id in user_favorites %}checked{% endif %} />
                   <i class="fa fa-heart"></i>
                 </label>
                 <div class="uni-details">
@@ -353,6 +358,35 @@
           });
       });
     </script>
+
+  <script>
+  $(document).ready(function() {
+    $('.favorite-checkbox').change(function() {
+      var universityId = $(this).data('university-id');
+      var action = this.checked ? 'add' : 'remove';
+  
+      $.ajax({
+        url: '{% url "toggle_favorite" %}',
+        method: 'POST',
+        data: {
+          university_id: universityId,
+          action: action,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(response) {
+          if (response.status === 'success') {
+            toastr.success(response.message);
+          } else {
+            toastr.error(response.message);
+          }
+        },
+        error: function() {
+          toastr.error('An error occurred. Please try again.');
+        }
+      });
+    });
+  });
+   </script>
 
     <script src="{% static 'js/about.js' %}"></script>
   </body>

@@ -40,7 +40,7 @@ class HowToApplyView(TemplateView):
         ]
         context["breadcrumb"] = breadcrumb
         return context
-
+            
 
 class UniPage(TemplateView):
     template_name = "pages/institution.html"

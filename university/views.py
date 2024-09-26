@@ -1,6 +1,9 @@
 from django.views.generic import ListView, DetailView
-from .models import University, Location  
+from .models import University
 from django.db.models import Q
+from django.http import JsonResponse
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class UniversityListView(ListView):
     model = University
@@ -42,9 +45,13 @@ class UniversityListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['search_performed'] = self.search_performed
-        context['locations'] = Location.objects.all()  
+        if self.request.user.is_authenticated:
+            user_favorites = self.request.user.favorites.values_list('id', flat=True)
+            context['user_favorites'] = list(user_favorites)
+        else:
+            context['user_favorites'] = []
         return context
+
 
 class UniversityDetailView(DetailView):
     model = University
@@ -57,3 +64,37 @@ class UniversityDetailView(DetailView):
             'general_requirements',
             'resources'
         )
+    
+
+
+class ToggleFavoriteView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        university_id = request.POST.get('university_id')
+        action = request.POST.get('action')
+
+        if not university_id or not action:
+            return JsonResponse(
+                {'status': 'error',
+                 'message': 'Invalid data'}, status=400)
+        
+        try:
+            university = University.objects.get(id=university_id)
+        except University.DoesNotExist:
+            return JsonResponse(
+                {'status': 'error',
+                 'message': 'University not found'}, status=404)
+        
+        if action == 'add':
+            request.user.favorites.add(university)
+            return JsonResponse(
+                {'status': 'success',
+                 'message': 'Added to favorites'})
+        elif action == 'remove':
+            request.user.favorites.remove(university)
+            return JsonResponse(
+                {'status': 'success',
+                 'message': 'Removed from favorites'})
+        else:
+            return JsonResponse(
+                {'status': 'error',
+                 'message': 'Unknown action'}, status=400)

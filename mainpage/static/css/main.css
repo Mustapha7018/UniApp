@@ -39,7 +39,7 @@ body {
 }
 
 .main-container {
-  width: 100%;
+  width: 95%;
   max-width: 1600px;
   margin: 0 auto;
   background: var(--white);
@@ -622,6 +622,7 @@ header .hero p {
     padding: 0;
     line-height: 1.5;
     word-wrap: break-word;
+    font-size: 0.8rem;
   }
 }
 

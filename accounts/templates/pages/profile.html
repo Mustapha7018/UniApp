@@ -141,9 +141,28 @@
                     </form>
                 </div>
                 <div id="Favorites" class="tabcontent" style="display: none">
-                    <p class="empty-favorites">You haven't added any favorites yet.</p>
-                </div>
-            </div>
+                    {% if user.favorites.exists %}
+                      <div class="uni-grid">
+                        {% for university in user.favorites.all %}
+                          <a href="{% url 'university-detail' university.id %}">
+                            <div class="uni-card" style="cursor: pointer;">
+                              <img src="{{ university.card_image.url }}" alt="{{ university.name }}" />
+                              <label class="favorite-icon">
+                                <input type="checkbox" class="favorite-checkbox" data-university-id="{{ university.id }}" checked />
+                                <i class="fa fa-heart"></i>
+                              </label>
+                              <div class="uni-details">
+                                <h3>{{ university.name }}</h3>
+                                <p>{{ university.city }}, {{ university.region }}</p>
+                              </div>
+                            </div>
+                          </a>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <p class="empty-favorites">You haven't added any favorites yet.</p>
+                    {% endif %}
+                  </div>
         </main>
     </div>
 
