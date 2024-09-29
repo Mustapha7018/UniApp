@@ -72,6 +72,9 @@ class ToggleFavoriteView(LoginRequiredMixin, View):
         university_id = request.POST.get('university_id')
         action = request.POST.get('action')
 
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'unauthenticated'}, status=401)
+
         if not university_id or not action:
             return JsonResponse(
                 {'status': 'error',

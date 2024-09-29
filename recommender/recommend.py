@@ -1,4 +1,3 @@
-# recommender/recommend.py
 import threading
 from functools import lru_cache
 from geopy.geocoders import Nominatim

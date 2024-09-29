@@ -203,3 +203,15 @@ MESSAGE_TAGS = {
     messages.WARNING: "warning",
     messages.ERROR: "error",
 }
+
+
+
+# Celery settings
+CELERY_BROKER_URL = 'amqp://localhost'  # RabbitMQ broker URL
+CELERY_RESULT_BACKEND = 'rpc://'         # Using RPC backend with RabbitMQ
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_TIMEZONE = 'UTC'  
