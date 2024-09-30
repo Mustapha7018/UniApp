@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import University
+from .models import University,Location
 from django.db.models import Q
 from django.http import JsonResponse
 from django.views import View
@@ -11,49 +11,51 @@ from django.views.generic import View
 
 class UniversityListView(ListView):
     model = University
-    template_name = "pages/search_page.html"
-    context_object_name = "universities"
+    template_name = 'pages/search_page.html'
+    context_object_name = 'universities'
     paginate_by = 10
 
     def get_queryset(self):
         queryset = University.objects.all()
-        search_query = self.request.GET.get("search", "").strip()
-        sort_by = self.request.GET.get("sort", "name")
-        filter_type = self.request.GET.get("type", "")
-        filter_location = self.request.GET.get("location", "")
+        search_query = self.request.GET.get('search', '').strip()
+        sort_by = self.request.GET.get('sort', 'name')
+        filter_type = self.request.GET.get('type', '')
+        filter_location = self.request.GET.get('location', '')
         self.search_performed = bool(search_query or filter_type or filter_location)
 
         if search_query:
             queryset = queryset.filter(
-                Q(name__icontains=search_query)
-                | Q(city__icontains=search_query)
-                | Q(region__icontains=search_query)
+                Q(name__icontains=search_query) |
+                Q(city__icontains=search_query) |
+                Q(region__icontains(search_query))
             )
 
         if filter_type:
-            if filter_type == "Private":
-                filter_type = "PRI"
-            elif filter_type == "Public":
-                filter_type = "PUB"
+            if filter_type == 'Private':
+                filter_type = 'PRI'
+            elif filter_type == 'Public':
+                filter_type = 'PUB'
             queryset = queryset.filter(type=filter_type)
 
         if filter_location:
             queryset = queryset.filter(location__name=filter_location)
 
-        if sort_by == "A-Z":
-            queryset = queryset.order_by("name")
-        elif sort_by == "Z-A":
-            queryset = queryset.order_by("-name")
+        if sort_by == 'A-Z':
+            queryset = queryset.order_by('name')
+        elif sort_by == 'Z-A':
+            queryset = queryset.order_by('-name')
 
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Fetch all unique locations from the Location model
+        context['locations'] = Location.objects.all()
         if self.request.user.is_authenticated:
-            user_favorites = self.request.user.favorites.values_list("id", flat=True)
-            context["user_favorites"] = list(user_favorites)
+            user_favorites = self.request.user.favorites.values_list('id', flat=True)
+            context['user_favorites'] = list(user_favorites)
         else:
-            context["user_favorites"] = []
+            context['user_favorites'] = []
         return context
 
 
