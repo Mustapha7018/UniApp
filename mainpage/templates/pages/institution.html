@@ -57,12 +57,14 @@
           class="hero"
           style="background-image: url('{{ university.banner.url }}');"
         >
-          <h1>University of Ghana</h1>
+          <h1>{{ university.name }}</h1>
           <div class="cta-buttons">
             {% if university.undergraduate_program_url %}
             <a
               href="{{ university.undergraduate_program_url }}"
               class="cta-btn"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Undergraduate
               <i class="fa-solid fa-up-right-from-square"></i>
@@ -71,6 +73,8 @@
             <a
               href="{{ university.graduate_program_url }}"
               class="cta-btn cta-btn-alt"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Graduate
               <i class="fa-solid fa-up-right-from-square"></i>
@@ -119,7 +123,7 @@
         <section class="academic-programes">
           <h2>Academic programs</h2>
           <p>
-            The University of Ghana provides an extensive selection of courses
+            The {{ university.name }} provides an extensive selection of courses
             across multiple fields of study. These encompass:
           </p>
           <ul>
@@ -154,24 +158,29 @@
           <p>
             Website:
             <a href="{{ university.website_url }}"
+            target="_blank" rel="noopener noreferrer"
               >{{ university.website_url }}</a
             >
           </p>
           <div class="social-icons">
             {% if university.twitter %}
             <a href="{{ university.twitter }}"
+            target="_blank" rel="noopener noreferrer"
               ><i class="fa-brands fa-x-twitter"></i
             ></a>
             {% endif %} {% if university.instagram %}
             <a href="{{ university.instagram }}"
+            target="_blank" rel="noopener noreferrer"
               ><i class="fa-brands fa-instagram"></i
             ></a>
             {% endif %} {% if university.facebook %}
             <a href="{{ university.facebook }}"
+            target="_blank" rel="noopener noreferrer"
               ><i class="fa-brands fa-facebook"></i
             ></a>
             {% endif %} {% if university.linkedin %}
             <a href="{{ university.linkedin }}"
+            target="_blank" rel="noopener noreferrer"
               ><i class="fa-brands fa-linkedin"></i
             ></a>
             {% endif %}

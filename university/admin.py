@@ -32,8 +32,8 @@ class UniversityAdmin(admin.ModelAdmin):
     list_filter = ('type', 'location')
     search_fields = ('name', 'city', 'region', 'abbreviation')
     fieldsets = (
-        (None, {
-            'fields': ('name', 'abbreviation', 'type', 'location')
+        ('General Info', {
+            'fields': ('name', 'abbreviation', 'type', 'location', 'city', 'region')
         }),
         ('Contact Information', {
             'fields': ('email', 'phone', 'address_line1', 'address_line2', 'address_line3')
@@ -46,9 +46,6 @@ class UniversityAdmin(admin.ModelAdmin):
         }),
         ('Academic Programs', {
             'fields': ('graduate_program_url', 'undergraduate_program_url')
-        }),
-        ('Description', {
-            'fields': ('description',)
         }),
     )
 

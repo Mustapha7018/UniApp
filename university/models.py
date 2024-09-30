@@ -41,10 +41,7 @@ class University(models.Model):
     instagram = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
     website_url = models.URLField(blank=True)
-    
-    # Description
-    description = models.TextField(blank=True)
-    
+        
     # Academic Program Links
     graduate_program_url = models.URLField(blank=True)
     undergraduate_program_url = models.URLField(blank=True)
@@ -64,7 +61,6 @@ class AcademicProgram(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE, related_name='academic_programs')
     program_type = models.CharField(max_length=2, choices=PROGRAM_TYPE_CHOICES)
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
     url = models.URLField(blank=True)
 
     def __str__(self):

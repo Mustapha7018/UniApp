@@ -236,7 +236,7 @@ nav a.nav-special:hover {
 
 /* HERO SECTION */
 header .hero {
-  background-image: url("../images/ug_bg.png");
+  /* background-image: url("../images/ug_bg.png"); */
   background-repeat: no-repeat;
   background-size: cover;
   height: 40vh;
@@ -472,6 +472,11 @@ main {
   margin-bottom: 1.5rem;
 }
 
+.location-section a {
+  color: var(--black);
+  font-weight: normal;
+}
+
 .location-section .social-icons a {
   font-size: 1.5rem;
   color: var(--black);
@@ -507,6 +512,7 @@ main {
   .entry-requirements ol,
   .location-section p {
     font-size: 0.9rem;
+    line-height: 3;
   }
 
   .location-section .map iframe {
