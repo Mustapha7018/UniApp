@@ -10,12 +10,19 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   </head>
 
   <body>
+    <!-- Hidden form to include CSRF token -->
+    <form style="display: none;">
+      {% csrf_token %}
+    </form>
     <div class="main-container">
       <!-- Header -->
       <header>
@@ -104,11 +111,11 @@
                   <select id="filter-location" name="location">
                     <option value="">All</option>
                     {% for loc in locations %}
-                      <option value="{{ loc.name }}" {% if request.GET.location == loc.name %}selected{% endif %}>
-                        {{ loc.name }}
-                      </option>
+                        <option value="{{ loc.name }}" {% if request.GET.location == loc.name %}selected{% endif %}>
+                            {{ loc.name }}
+                        </option>
                     {% endfor %}
-                  </select>
+                </select>
                 </li>
                 <li>
                   <label for="filter-institution-type">Institution Type:</label>
@@ -359,34 +366,60 @@
       });
     </script>
 
+  <!-- JavaScript for CSRF and AJAX requests -->
   <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
     $(document).ready(function() {
-    $('.favorite-checkbox').change(function() {
+      $('.favorite-checkbox').change(function() {
         var universityId = $(this).data('university-id');
         var action = this.checked ? 'add' : 'remove';
-        var csrfToken = '{{ csrf_token }}'; 
+        var csrfToken = getCookie('csrftoken'); // Get CSRF token from cookies
 
         $.ajax({
-            url: '{% url "toggle_favorite" %}',
-            method: 'POST',
-            data: {
-                university_id: universityId,
-                action: action,
-                csrfmiddlewaretoken: csrfToken  
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-                } else {
-                    toastr.error(response.message);
-                }
-            },
-            error: function() {
-                toastr.error('An error occurred. Please try again.');
+          url: '{% url "toggle_favorite" %}',  // Use your Django URL
+          method: 'POST',
+          data: JSON.stringify({
+            university_id: universityId,
+            action: action
+          }),
+          contentType: "application/json",  // Send as JSON
+          headers: {
+            'X-CSRFToken': csrfToken  // Pass the CSRF token in headers
+          },
+          success: function(response) {
+            if (response.status === 'success') {
+              toastr.success(response.message);
+            } else {
+              toastr.error(response.message);
             }
+          },
+          error: function(xhr) {
+            if (xhr.status === 401) {
+              toastr.error('You need to log in to favorite universities.');
+              setTimeout(function() {
+                window.location.href = "{% url 'login' %}";  // Redirect to login page after showing the error
+              }, 2000);
+            } else {
+              toastr.error('An error occurred. Please try again.');
+            }
+          }
         });
+      });
     });
-});
   </script>
 
     <script src="{% static 'js/about.js' %}"></script>

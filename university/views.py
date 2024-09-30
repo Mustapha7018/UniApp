@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import University,Location
+from .models import University, Location
 from django.db.models import Q
 from django.http import JsonResponse
 from django.views import View
@@ -11,51 +11,51 @@ from django.views.generic import View
 
 class UniversityListView(ListView):
     model = University
-    template_name = 'pages/search_page.html'
-    context_object_name = 'universities'
+    template_name = "pages/search_page.html"
+    context_object_name = "universities"
     paginate_by = 10
 
     def get_queryset(self):
         queryset = University.objects.all()
-        search_query = self.request.GET.get('search', '').strip()
-        sort_by = self.request.GET.get('sort', 'name')
-        filter_type = self.request.GET.get('type', '')
-        filter_location = self.request.GET.get('location', '')
+        search_query = self.request.GET.get("search", "").strip()
+        sort_by = self.request.GET.get("sort", "name")
+        filter_type = self.request.GET.get("type", "")
+        filter_location = self.request.GET.get("location", "")
         self.search_performed = bool(search_query or filter_type or filter_location)
 
         if search_query:
             queryset = queryset.filter(
-                Q(name__icontains=search_query) |
-                Q(city__icontains=search_query) |
-                Q(region__icontains(search_query))
+                Q(name__icontains=search_query)
+                | Q(city__icontains=search_query)
+                | Q(region__icontains(search_query))
             )
 
         if filter_type:
-            if filter_type == 'Private':
-                filter_type = 'PRI'
-            elif filter_type == 'Public':
-                filter_type = 'PUB'
+            if filter_type == "Private":
+                filter_type = "PRI"
+            elif filter_type == "Public":
+                filter_type = "PUB"
             queryset = queryset.filter(type=filter_type)
 
         if filter_location:
             queryset = queryset.filter(location__name=filter_location)
 
-        if sort_by == 'A-Z':
-            queryset = queryset.order_by('name')
-        elif sort_by == 'Z-A':
-            queryset = queryset.order_by('-name')
+        if sort_by == "A-Z":
+            queryset = queryset.order_by("name")
+        elif sort_by == "Z-A":
+            queryset = queryset.order_by("-name")
 
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Fetch all unique locations from the Location model
-        context['locations'] = Location.objects.all()
+        context["locations"] = Location.objects.all()
         if self.request.user.is_authenticated:
-            user_favorites = self.request.user.favorites.values_list('id', flat=True)
-            context['user_favorites'] = list(user_favorites)
+            user_favorites = self.request.user.favorites.values_list("id", flat=True)
+            context["user_favorites"] = list(user_favorites)
         else:
-            context['user_favorites'] = []
+            context["user_favorites"] = []
         return context
 
 
@@ -74,16 +74,28 @@ class UniversityDetailView(DetailView):
 
 
 class ToggleFavoriteView(LoginRequiredMixin, View):
+    def handle_no_permission(self):
+        # Handle unauthenticated case by returning a JSON response for AJAX requests
+        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
+            return JsonResponse(
+                {
+                    "status": "unauthenticated",
+                    "message": "You need to log in to favorite universities.",
+                },
+                status=401,
+            )
+        return super().handle_no_permission()
+
     def post(self, request, *args, **kwargs):
-        # Try to handle JSON data first
         try:
-            data = json.loads(request.body)
-            university_id = data.get("university_id")
-            action = data.get("action")
-        except (json.JSONDecodeError, TypeError):
-            # Fall back to form-encoded data if JSON decoding fails
-            university_id = request.POST.get("university_id")
-            action = request.POST.get("action")
+            data = json.loads(request.body)  # Parse JSON body
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid JSON data"}, status=400
+            )
+
+        university_id = data.get("university_id")
+        action = data.get("action")
 
         if not university_id or not action:
             return JsonResponse(
