@@ -206,10 +206,12 @@ header .hero {
   padding: 1rem;
   cursor: pointer;
   font-size: 1.2rem;
+  transition: border-bottom 0.3s ease;
 }
 
 .tabs button.active {
   border-bottom: 2px solid var(--secondary);
+  transition: border-bottom 0.3s ease-in-out;
 }
 
 .tabcontent {
