@@ -31,7 +31,7 @@
     {% for post in recommended_posts %}
     <div class="blog-card">
       {% if post.featured_image %}
-      {% image page.featured_image original %}
+      {% image post.featured_image original %}
       {% endif %}
       <div class="blog-content">
         <a href="{{ post.url }}">

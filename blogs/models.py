@@ -61,13 +61,12 @@ class BlogPage(Page):
 
     template = "blog/blog_page.html"
     parent_page_types = ["BlogIndexPage"]
-
     def get_recommended_posts(self):
         return (
             BlogPage.objects.sibling_of(self)
             .live()
-            .exclude(id=self.id)
-            .order_by("-date")[:3]
+            .exclude(id=self.id) 
+            .order_by("-date")[:3]  
         )
 
     def get_context(self, request):

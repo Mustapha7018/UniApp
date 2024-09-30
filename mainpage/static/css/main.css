@@ -954,10 +954,14 @@ header .hero p {
       margin: 10px;
       overflow: hidden;
       text-align: left;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
 
       img {
         width: 100%;
-        height: auto;
+        height: 250px;
+        object-fit: cover;
         display: block;
         cursor: pointer;
         transition: transform 0.3s ease;
@@ -965,11 +969,13 @@ header .hero p {
 
       .blog-content {
         padding: 1rem;
+        flex-grow: 1;
 
         p {
           padding-bottom: 2rem;
           text-decoration: underline;
           color: var(--black);
+          min-height: 50px; 
         }
 
         span {
@@ -984,15 +990,19 @@ header .hero p {
     }
   }
 
-  button {
-    width: 150px;
-    height: 50px;
+  .blog-button {
+    display: inline-block;
+    padding: 12px 30px;
     background-color: var(--white);
+    color: var(--black);
     border: none;
     cursor: pointer;
     font-size: 1rem;
     margin-bottom: 3rem;
     margin-left: 0.7rem;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
   }
 }
 

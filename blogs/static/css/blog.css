@@ -341,7 +341,7 @@ main {
 .latest-blog h4 {
   font-size: var(--medium-heading);
   font-weight: 600;
-  margin: 4rem 0 4rem 0;
+  margin: 4rem 0;
   color: var(--black);
   font-family: var(--primary-font);
   text-align: left;
@@ -355,14 +355,15 @@ main {
 
 .blog-card {
   background: var(--white);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%; 
+  overflow: hidden;
 }
 
 .blog-card img {
   width: 100%;
-  height: auto;
+  height: 200px; 
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -375,12 +376,16 @@ main {
   padding: 20px;
   background: var(--primary);
   color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1; 
 }
 
 .blog-content h5 {
   font-size: 1rem;
   font-weight: 400;
-  margin: 0 0 30px;
+  margin-bottom: 30px;
   font-family: var(--secondary-font);
   text-decoration: underline;
   color: var(--gray-2);
@@ -389,6 +394,7 @@ main {
 .blog-content .date {
   font-size: 0.8rem;
   color: var(--gray-2);
+  margin-top: auto; 
 }
 
 /* Blog Section Responsiveness */
@@ -422,7 +428,7 @@ main {
   }
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .latest-blog h4 {
     font-size: 1.5rem;
   }
@@ -431,7 +437,6 @@ main {
     gap: 30px;
   }
 }
-
 
 /* SINGLE BLOG PAGE STYLING */
 .blog__section {

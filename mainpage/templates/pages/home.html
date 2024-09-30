@@ -273,9 +273,9 @@
     {% endfor %}
   </div>
   {% if blog_index_page %}
-    <a href="{% pageurl blog_index_page %}">View Blog</a>
+  <a href="{% pageurl blog_index_page %}" class="blog-button">View Blog</a>
   {% else %}
-      <p>Blog page not available</p>
+    <p>Blog page not available</p>
   {% endif %}
 </section>
 
