@@ -160,7 +160,7 @@
                         {% endfor %}
                       </div>
                     {% else %}
-                      <p class="empty-favorites">You haven't added any favorites yet.</p>
+                      <p class="empty-favorites">You haven't added any favorites yet. Browse <a href="{% url 'search-page' %}" style="color: rgba(109, 0, 39, 0.9); text-decoration: underline;">institutions</a></p>
                     {% endif %}
                   </div>
         </main>
@@ -226,6 +226,54 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Attach event listeners to all favorite checkboxes
+        document.querySelectorAll('.favorite-checkbox').forEach(function (checkbox) {
+          checkbox.addEventListener('change', function (event) {
+            const universityId = event.target.getAttribute('data-university-id');
+            if (!event.target.checked) {
+              // Show the modal for confirmation when the checkbox is unchecked
+              const unfavoriteModal = new bootstrap.Modal(document.getElementById('unfavoriteModal'));
+              document.getElementById('unfavorite-form').setAttribute('data-university-id', universityId);
+              unfavoriteModal.show();
+            }
+          });
+        });
+    
+        // Handle form submission inside the modal
+        document.getElementById('unfavorite-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const universityId = event.target.getAttribute('data-university-id');
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    
+    fetch("{% url 'toggle_favorite' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      body: JSON.stringify({
+        university_id: universityId,
+        action: 'remove'
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        // Close the modal
+        const unfavoriteModal = bootstrap.Modal.getInstance(document.getElementById('unfavoriteModal'));
+        unfavoriteModal.hide();
+
+        // Remove the university card from the page
+        document.querySelector(`input[data-university-id="${universityId}"]`).closest('.uni-card').remove();
+      } else {
+        alert('Error unfavoriting the university.');
+      }
+    });
+});
+      });
     </script>
 </body>
 </html>

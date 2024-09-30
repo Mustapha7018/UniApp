@@ -7,20 +7,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('university', '0006_alter_university_map_location_academicprogram_and_more'),
+        ("university", "0006_alter_university_map_location_academicprogram_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AboutParagraph',
+            name="AboutParagraph",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', models.TextField()),
-                ('order', models.PositiveIntegerField(default=0)),
-                ('university', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='about_paragraphs', to='university.university')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", models.TextField()),
+                ("order", models.PositiveIntegerField(default=0)),
+                (
+                    "university",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="about_paragraphs",
+                        to="university.university",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['order'],
+                "ordering": ["order"],
             },
         ),
     ]

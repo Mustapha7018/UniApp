@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('university', '0004_university_abbreviation_university_address_line1_and_more'),
+        (
+            "university",
+            "0004_university_abbreviation_university_address_line1_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='university',
-            name='website_url',
+            model_name="university",
+            name="website_url",
             field=models.URLField(blank=True),
         ),
     ]

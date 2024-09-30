@@ -154,15 +154,14 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
-
     # PostgreSQL Setup
     # "postgres": {
     #     "ENGINE": "django.db.backends.postgresql",
     #     "NAME": "uniApp_DB",
     #     "USER": "uniappdb",
     #     "PASSWORD": "myuniappdb",
-    #     "HOST": "",  
-    #     "PORT": "5432", 
+    #     "HOST": "",
+    #     "PORT": "5432",
     # },
 }
 
@@ -215,13 +214,12 @@ MESSAGE_TAGS = {
 }
 
 
-
 # Celery settings
-CELERY_BROKER_URL = 'amqp://localhost'  # RabbitMQ broker URL
-CELERY_RESULT_BACKEND = 'rpc://'         # Using RPC backend with RabbitMQ
+CELERY_BROKER_URL = "amqp://localhost"  # RabbitMQ broker URL
+CELERY_RESULT_BACKEND = "rpc://"  # Using RPC backend with RabbitMQ
 
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
 
-CELERY_TIMEZONE = 'UTC'  
+CELERY_TIMEZONE = "UTC"

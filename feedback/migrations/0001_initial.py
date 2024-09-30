@@ -7,17 +7,35 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Feedback',
+            name="Feedback",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('page', models.CharField(choices=[('search page', 'Search Page'), ('about', 'About'), ('how to apply', 'Resources'), ('uni page', 'Uni Page')], max_length=100)),
-                ('feedback', models.CharField(max_length=10)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "page",
+                    models.CharField(
+                        choices=[
+                            ("search page", "Search Page"),
+                            ("about", "About"),
+                            ("how to apply", "Resources"),
+                            ("uni page", "Uni Page"),
+                        ],
+                        max_length=100,
+                    ),
+                ),
+                ("feedback", models.CharField(max_length=10)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

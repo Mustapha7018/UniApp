@@ -360,33 +360,34 @@
     </script>
 
   <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
     $('.favorite-checkbox').change(function() {
-      var universityId = $(this).data('university-id');
-      var action = this.checked ? 'add' : 'remove';
-  
-      $.ajax({
-        url: '{% url "toggle_favorite" %}',
-        method: 'POST',
-        data: {
-          university_id: universityId,
-          action: action,
-          csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        success: function(response) {
-          if (response.status === 'success') {
-            toastr.success(response.message);
-          } else {
-            toastr.error(response.message);
-          }
-        },
-        error: function() {
-          toastr.error('An error occurred. Please try again.');
-        }
-      });
+        var universityId = $(this).data('university-id');
+        var action = this.checked ? 'add' : 'remove';
+        var csrfToken = '{{ csrf_token }}'; 
+
+        $.ajax({
+            url: '{% url "toggle_favorite" %}',
+            method: 'POST',
+            data: {
+                university_id: universityId,
+                action: action,
+                csrfmiddlewaretoken: csrfToken  
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function() {
+                toastr.error('An error occurred. Please try again.');
+            }
+        });
     });
-  });
-   </script>
+});
+  </script>
 
     <script src="{% static 'js/about.js' %}"></script>
   </body>

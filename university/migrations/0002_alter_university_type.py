@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('university', '0001_initial'),
+        ("university", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='university',
-            name='type',
-            field=models.CharField(choices=[('PUB', 'Public'), ('PRI', 'Private')], default='PUB', max_length=10),
+            model_name="university",
+            name="type",
+            field=models.CharField(
+                choices=[("PUB", "Public"), ("PRI", "Private")],
+                default="PUB",
+                max_length=10,
+            ),
         ),
     ]

@@ -7,42 +7,105 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('university', '0005_university_website_url'),
+        ("university", "0005_university_website_url"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='university',
-            name='map_location',
-            field=models.URLField(help_text='URL for the embedded map (e.g., Google Maps)'),
+            model_name="university",
+            name="map_location",
+            field=models.URLField(
+                help_text="URL for the embedded map (e.g., Google Maps)"
+            ),
         ),
         migrations.CreateModel(
-            name='AcademicProgram',
+            name="AcademicProgram",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('program_type', models.CharField(choices=[('UG', 'Undergraduate'), ('GR', 'Graduate')], max_length=2)),
-                ('name', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True)),
-                ('url', models.URLField(blank=True)),
-                ('university', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='academic_programs', to='university.university')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "program_type",
+                    models.CharField(
+                        choices=[("UG", "Undergraduate"), ("GR", "Graduate")],
+                        max_length=2,
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True)),
+                ("url", models.URLField(blank=True)),
+                (
+                    "university",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="academic_programs",
+                        to="university.university",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='GeneralRequirement',
+            name="GeneralRequirement",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('requirement', models.TextField()),
-                ('university', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='general_requirements', to='university.university')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("requirement", models.TextField()),
+                (
+                    "university",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="general_requirements",
+                        to="university.university",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Resource',
+            name="Resource",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('resource_type', models.CharField(choices=[('AD', 'Additional Info'), ('UL', 'Useful Links'), ('DS', 'Discover')], max_length=2)),
-                ('title', models.CharField(max_length=255)),
-                ('url', models.URLField()),
-                ('university', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='resources', to='university.university')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "resource_type",
+                    models.CharField(
+                        choices=[
+                            ("AD", "Additional Info"),
+                            ("UL", "Useful Links"),
+                            ("DS", "Discover"),
+                        ],
+                        max_length=2,
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("url", models.URLField()),
+                (
+                    "university",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="resources",
+                        to="university.university",
+                    ),
+                ),
             ],
         ),
     ]

@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0005_remove_customuser_academic_background_and_more'),
-        ('university', '0007_aboutparagraph'),
+        ("accounts", "0005_remove_customuser_academic_background_and_more"),
+        ("university", "0007_aboutparagraph"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='favorites',
-            field=models.ManyToManyField(blank=True, related_name='favorited_by', to='university.university'),
+            model_name="customuser",
+            name="favorites",
+            field=models.ManyToManyField(
+                blank=True, related_name="favorited_by", to="university.university"
+            ),
         ),
     ]

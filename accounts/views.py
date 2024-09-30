@@ -26,18 +26,19 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmVie
 logger = logging.getLogger(__name__)
 
 
-
 class AdminOnlyView(LoginRequiredMixin, UserPassesTestMixin):
-    template_name = 'admin_page.html'
+    template_name = "admin_page.html"
 
     def test_func(self) -> bool:
         return self.request.user.is_superuser
-    
+
     def handle_no_permission(self) -> HttpResponseRedirect:
         return super().handle_no_permission()
 
 
 """ REGISTER USER """
+
+
 class RegisterView(View):
     template_name = "pages/register.html"
 

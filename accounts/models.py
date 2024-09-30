@@ -40,7 +40,9 @@ class CustomUser(AbstractUser):
     profile_picture = models.ImageField(
         upload_to="profile_pictures/", default="images/profile_img.png"
     )
-    favorites = models.ManyToManyField(University, related_name="favorited_by", blank=True)
+    favorites = models.ManyToManyField(
+        University, related_name="favorited_by", blank=True
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
